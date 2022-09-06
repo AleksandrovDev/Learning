@@ -1,0 +1,25 @@
+<p id="baloon" style="position: absolute; top: 300px; left: 440px;">&#127880;</p>
+
+<script>
+  const baloon = document.querySelector('#baloon');
+  let fontSize = 16;
+
+  function handleArrow(event) {
+    baloon.style.fontSize = '20px';
+    if (event.keyCode === 40) {
+      baloon.style.fontSize = `${fontSize--}px`;
+      event.preventDefault();
+    }
+    if (event.keyCode === 38) {
+      if (fontSize > 70) {
+        baloon.textContent = '💥';
+        window.removeEventListener('keydown', handleArrow);
+      }
+      baloon.style.fontSize = `${fontSize++}px`;
+      event.preventDefault();
+    }
+  }
+
+  window.addEventListener('keydown', handleArrow);
+
+</script>

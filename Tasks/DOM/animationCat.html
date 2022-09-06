@@ -1,0 +1,28 @@
+<p style="text-align: center">
+  <img src="img/cat.png" style="position: absolute; margin-left: 500px; margin-top: 300px;" width="100px">
+  <img src="img/hat.png" style="position: absolute; margin-left: 500px; margin-top: 300px;" width="100px" id="hat">
+</p>
+
+<script>
+  let cat = document.querySelector('img');
+  let hat = document.querySelector('#hat');
+  let angle = Math.PI / 2;
+  let angleHat = Math.PI / 2;
+
+  function animate(time, lastTime) {
+    console.log(time);
+    if (lastTime != null) {
+      angle += (time - lastTime) * 0.001;
+      angleHat -= (time - lastTime) * 0.001;
+    }
+
+    cat.style.top = Math.sin(angle) * 50 + 'px';
+    hat.style.top = Math.sin(angleHat) * 200 + 'px';
+    cat.style.left = Math.cos(angle) * 200 + 'px'; 
+    hat.style.left = Math.cos(angleHat) * 200 + 'px'; 
+
+    requestAnimationFrame(newTime => animate(newTime, time));
+  }
+
+  requestAnimationFrame(animate);
+</script>

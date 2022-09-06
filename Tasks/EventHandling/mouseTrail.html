@@ -1,0 +1,67 @@
+<style>
+  div {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+  }
+  .rotated {
+    transform: rotate(45deg);
+  }
+</style>
+
+<div></div>
+
+<script>
+  let timeout;
+  const colors = ['black', 'red', 'blue', 'orange', 'purple', 'yellow', 'maroon', 'fuchsia', 'lime', 'navy', 'aqua'];
+  const rotation = ['rotate(45deg)', 'rotate(90deg)', 'rotate(25deg)','rotate(75deg)',]
+  createElements(50);
+  const blocks = Array.from(document.querySelectorAll('div'));
+  let currentIndex = 0;
+
+  function handleMouseMove(event) {
+    clearTimeout(timeout);
+    move();
+
+    function move() {
+      const rotationIndex = Math.floor(Math.random() * rotation.length);
+
+      blocks[currentIndex].style.top = event.clientY;
+      blocks[currentIndex].style.left = event.clientX;
+      blocks[currentIndex].style.transform = rotation[rotationIndex];
+      currentIndex++;
+
+      if (currentIndex === blocks.length) {
+        currentIndex = 0;
+    }
+    }
+
+    function moveAllBlocksToMouse() {
+      for (block of blocks) {
+        block.style.top = event.clientY;
+        block.style.left = event.clientX;
+      }
+    }
+
+
+    timeout = setTimeout(() => {
+      moveAllBlocksToMouse();
+    }, 1000)
+    
+  }
+
+  function createElements(numberOfElements) {
+    for (let i = 0; i < numberOfElements; i++) {
+      const colorIndex = Math.floor(Math.random() * colors.length);
+      const element = document.createElement('div');
+      element.style.background = colors[colorIndex];
+      document.body.appendChild(element);
+    }
+  };
+
+  
+
+  document.body.addEventListener('mousemove', handleMouseMove);
+  console.log(blocks);
+</script>
