@@ -1,5 +1,5 @@
 import { Level } from "./Classes/Level.js";
-import { State } from './Classes/State.js';
+import { State } from "./Classes/State.js";
 
 function trackKeys(keys) {
   let down = Object.create(null);
@@ -35,8 +35,22 @@ function runLevel(level, Display) {
   let display = new Display(document.body, level);
   let state = State.start(level);
   let ending = 1;
+  let pause = false;
+
   return new Promise((resolve) => {
-    runAnimation((time) => {
+    window.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        pause = pause ? false : true;
+        if (!pause) {
+          runAnimation(frame);
+        }
+      }
+    });
+
+    function frame(time) {
+      if (pause) {
+        return false;
+      }
       state = state.update(time, arrowKeys);
       display.syncState(state);
       if (state.status == "playing") {
@@ -49,19 +63,26 @@ function runLevel(level, Display) {
         resolve(state.status);
         return false;
       }
-    });
+    }
+
+    runAnimation(frame);
   });
 }
 
 export async function runGame(plans, Display) {
-  let lives = 3;
+  let lives = 0;
   for (let level = 0; level < plans.length; ) {
     console.log(`Current lives: ${lives}`);
     let status = await runLevel(new Level(plans[level]), Display);
     if (status == "won") {
       level++;
-    } else if (status == 'lost') {
+    } else if (status == "lost") {
       if (lives === 0) {
+        console.log("You have lost");
+        const finalNode = document.createElement("div");
+        finalNode.textContent = "GAME OVER";
+        document.body.appendChild(finalNode);
+
         return;
       }
       lives--;
