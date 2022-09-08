@@ -36,7 +36,7 @@ Player.prototype.update = function(time, state, keys) {
   let movedY = pos.plus(new Vec(0, ySpeed * time));
   if (!state.level.touches(movedY, this.size, 'wall')) {
     pos = movedY;
-  } else if (keys.ArrowUp && ySpeed > 0) {
+  } else if (keys[' '] && ySpeed > 0) {
     ySpeed = - jumpSpeed;
   } else {
     ySpeed = 0;
