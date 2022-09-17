@@ -1,0 +1,45 @@
+<canvas width="1000" height="600"></canvas>
+
+<script>
+  let rectWidth = 500;
+  let rectHeight = 500;
+  let x = 60;
+  let y = 60;
+
+  let radius = 20;
+  let xMove = -1;
+  let yMove = -2;
+
+  function getRandom(from, to) {
+    return Math.ceil(Math.random() * (to + 1 - from));
+  }
+
+  function draw(time) {
+    const cx = document.querySelector('canvas').getContext('2d');
+    cx.clearRect(0, 0, 1000, 600);
+    const random = getRandom(1, 5) * getRandom(1, 5);
+    cx.strokeRect(20, 20, rectWidth, rectHeight);
+  
+    cx.beginPath();
+    if (x + radius >= rectWidth + 20) {
+      xMove = -random;
+    }
+    if (x - radius <= 20) {
+      xMove = random;
+    }
+    if (y + radius >= rectHeight + 20) {
+      yMove = -random;
+    }
+    if (y - radius <= 20){
+      yMove = +random;
+    }
+    
+    cx.arc(x += xMove, y += yMove, radius, Math.PI, Math.PI - 0.0001);
+    cx.closePath();
+    cx.fill();
+    window.requestAnimationFrame(draw);
+  }
+  
+  
+  window.requestAnimationFrame(draw);
+</script>

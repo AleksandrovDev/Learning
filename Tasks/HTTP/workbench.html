@@ -1,0 +1,21 @@
+<textarea></textarea><button>Run</button>
+<pre></pre>
+
+<script>
+  let code = document.querySelector('textarea');
+  let button = document.querySelector('button');
+  let output = document.querySelector('pre');
+
+  button.addEventListener('click', () => {
+    const execute = Function(code.value);
+    try {
+      output.textContent = JSON.stringify(execute());
+    } catch (err) {
+      output.textContent = err;
+    }
+    
+  })
+
+
+  console.log(code);
+</script>

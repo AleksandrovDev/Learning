@@ -1,0 +1,30 @@
+<p id="response"></p>
+
+<script>
+  let responseText = document.querySelector('#response');
+
+  const contentTypes = [
+    'text/plain',
+    'text/html',
+    'application/json',
+    'application/rainbows+unicorns'
+  ]
+
+  for (let contentType of contentTypes) {
+    fetch('https://eloquentjavascript.net/author', {
+    headers: {
+      'Accept': contentType,
+    }
+  }).then(result => {
+    const response = document.createElement('p');
+    response.textContent = result.status + ' ' + contentType;
+    document.body.appendChild(response);
+    return result.text()
+  }).then(text => {
+    console.log(text);
+  })
+  }
+
+
+  
+</script>
