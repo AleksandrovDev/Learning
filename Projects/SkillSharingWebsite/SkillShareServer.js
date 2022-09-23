@@ -1,6 +1,8 @@
 import { createServer } from "http";
 import { Router } from "./Router.js";
 import ecstatic from "ecstatic";
+import { writeFile, readFile } from "fs/promises";
+import { resolve } from "path";
 
 const router = new Router();
 const defaultHeaders = {
@@ -14,10 +16,10 @@ class SkillShareServer {
     this.waiting = [];
 
     let fileServer = ecstatic({
-      root: './Projects/SkillSharingWebsite/public',
+      root: "./Projects/SkillSharingWebsite/public",
     });
 
-    this.server = createServer((request, response) => {
+    this.server = createServer(async (request, response) => {
       let resolved = router.resolve(this, request);
       if (resolved) {
         resolved
@@ -68,7 +70,7 @@ router.add("GET", talkPath, async (server, title) => {
 router.add("DELETE", talkPath, async (server, title) => {
   if (title in server.talks) {
     delete server.talks[title];
-    server.updated();
+    await server.updated();
   }
   return {
     status: 204,
@@ -107,9 +109,9 @@ router.add("PUT", talkPath, async (server, title, request) => {
     presenter: talk.presenter,
     summary: talk.summary,
     comments: [],
-  }
+  };
 
-  server.updated();
+  await server.updated();
   return {
     status: 204,
   };
@@ -134,7 +136,7 @@ router.add("POST", /^\/talks\/([^\/]+)\/comments$/, async (server, title, reques
     };
   } else if (title in server.talks) {
     server.talks[title].comments.push(comment);
-    server.updated();
+    await server.updated();
     return {
       status: 204,
     };
@@ -146,28 +148,32 @@ router.add("POST", /^\/talks\/([^\/]+)\/comments$/, async (server, title, reques
   }
 });
 
-SkillShareServer.prototype.talkResponse = function () {
+SkillShareServer.prototype.talkResponse = async function () {
   let talks = [];
   for (let title of Object.keys(this.talks)) {
     talks.push(this.talks[title]);
   }
+  async function saveTalks(talks) {
+    await writeFile("./data.json", JSON.stringify(talks));
+    return talks;
+  }
+  let talksFromFile = await saveTalks(talks);
   return {
-    body: JSON.stringify(talks),
+    body: JSON.stringify(talksFromFile),
     headers: {
       "Content-Type": "application/json",
-      "ETag": `${this.version}`,
+      ETag: `${this.version}`,
       "Cache-Control": "no-store",
     },
   };
 };
 
 router.add("GET", /^\/talks$/, async (server, request) => {
-  let tag = /(.*)/.exec(request.headers['if-none-match']);
+  let tag = /(.*)/.exec(request.headers["if-none-match"]);
   let wait = /\bwait=(\d+)/.exec(request.headers["prefer"]);
 
-
   if (!tag || tag[1] != server.version) {
-    return server.talkResponse();
+    return await server.talkResponse();
   } else if (!wait) {
     return {
       status: 304,
@@ -192,12 +198,21 @@ SkillShareServer.prototype.waitForChanges = function (time) {
   });
 };
 
-SkillShareServer.prototype.updated = function () {
+SkillShareServer.prototype.updated = async function () {
   this.version++;
-  let response = this.talkResponse();
+  let response = await this.talkResponse();
   this.waiting.forEach((resolve) => resolve(response));
   this.waiting = [];
 };
 
+async function getDataFromFile() {
+  let data;
+  try {
+    data = await readFile("./data.json", "utf-8");
+  } catch (e) {
+    data = {};
+  }
+  return Object.assign(Object.create(null), JSON.parse(data));
+}
 
-new SkillShareServer(Object.create(null)).start(8000);
+new SkillShareServer(await getDataFromFile()).start(8000);
