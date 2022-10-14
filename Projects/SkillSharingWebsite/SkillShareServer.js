@@ -109,7 +109,7 @@ router.add("PUT", talkPath, async (server, title, request) => {
     presenter: talk.presenter,
     summary: talk.summary,
     comments: [],
-  };
+};
 
   await server.updated();
   return {
@@ -149,17 +149,18 @@ router.add("POST", /^\/talks\/([^\/]+)\/comments$/, async (server, title, reques
 });
 
 SkillShareServer.prototype.talkResponse = async function () {
-  let talks = [];
+  let talksList = [];
   for (let title of Object.keys(this.talks)) {
-    talks.push(this.talks[title]);
+    talksList.push(this.talks[title]);
   }
   async function saveTalks(talks) {
-    await writeFile("./data.json", JSON.stringify(talks));
-    return talks;
+    await writeFile("./data.json", talks);
   }
-  let talksFromFile = await saveTalks(talks);
+  await saveTalks(JSON.stringify(this.talks));
+  
+  
   return {
-    body: JSON.stringify(talksFromFile),
+    body: JSON.stringify(talksList),
     headers: {
       "Content-Type": "application/json",
       ETag: `${this.version}`,
@@ -208,11 +209,11 @@ SkillShareServer.prototype.updated = async function () {
 async function getDataFromFile() {
   let data;
   try {
-    data = await readFile("./data.json", "utf-8");
+    data = JSON.parse(await readFile("./data.json", "utf-8"));
   } catch (e) {
     data = {};
   }
-  return Object.assign(Object.create(null), JSON.parse(data));
+  return data;
 }
 
 new SkillShareServer(await getDataFromFile()).start(8000);
