@@ -117,7 +117,9 @@ function elt(type, props, ...children) {
 function renderTalk(talk, dispatch) {
   return elt(
     "section",
-    { className: "talk" },
+    { className: "talk",
+      id: talk.id,
+     },
     elt(
       "h2",
       null,
@@ -128,7 +130,7 @@ function renderTalk(talk, dispatch) {
         {
           type: "button",
           onclick() {
-            dispatch({ type: "deleteTalk", talk: talk.title });
+            dispatch({ type: "deleteTalk", talk: talk.id });
           },
         },
         "Delete"
@@ -145,7 +147,7 @@ function renderTalk(talk, dispatch) {
           let form = event.target;
           dispatch({
             type: "newComment",
-            talk: talk.title,
+            talk: talk.id,
             message: form.elements.comment.value,
           });
           form.reset();
@@ -162,7 +164,7 @@ function renderTalk(talk, dispatch) {
 }
 
 function renderComment(comment) {
-  return elt("p", { className: "comment" }, elt("strong", null, comment.author), ": ", comment.message);
+  return elt("p", { className: "comment", id: comment.message }, elt("strong", null, comment.author), ": ", comment.message);
 }
 
 function renderTalkForm(dispatch) {
@@ -199,11 +201,47 @@ class SkillShareApp {
   }
 
   syncState(state) {
-    if (state.talks != this.talks) {
-      this.talkDOM.textContent = "";
-      for (let talk of state.talks) {
+    if (!this.talks || Object.keys(this.talks).length === 0) {
+      for (let talk of Object.values(state.talks)) {
         this.talkDOM.appendChild(renderTalk(talk, this.dispatch));
       }
+      this.talks = state.talks;
+      return;
+    };
+
+    if (state.talks != this.talks) {
+      for (let talk of Object.values(state.talks)) {
+        const isExistingTalk = talk.id in this.talks;
+
+        if (!isExistingTalk) {
+          this.talkDOM.appendChild(renderTalk(talk, this.dispatch));
+          continue;
+        }
+
+        // check for new comments
+        // TODO: add ids to the comments to avoid rerendering old ones
+        if (talk.comments.length !== this.talks[talk.id].comments.length) {
+          // remove existing comments
+          const talkComments = document.getElementById(talk.id).getElementsByClassName('comment');
+
+          while (talkComments.length > 0) {
+            talkComments[0].parentNode.removeChild(talkComments[0]);
+          }
+
+          for (let comment of talk.comments) {
+            document.getElementById(talk.id).insertBefore(renderComment(comment), document.getElementById(talk.id).lastChild); // append this befor submit form
+          }
+        }
+      }
+
+      // check for deleted talks
+      for (let talkId of Object.keys(this.talks)) {
+        if (!(talkId in state.talks)) {
+          document.getElementById(talkId).remove();
+          delete this.talks[talkId];
+        }
+      }
+
       this.talks = state.talks;
     }
   }

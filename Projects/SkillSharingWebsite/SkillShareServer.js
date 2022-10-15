@@ -3,6 +3,7 @@ import { Router } from "./Router.js";
 import ecstatic from "ecstatic";
 import { writeFile, readFile } from "fs/promises";
 import { resolve } from "path";
+import { v4 as uuidv4 } from "uuid";
 
 const router = new Router();
 const defaultHeaders = {
@@ -67,9 +68,9 @@ router.add("GET", talkPath, async (server, title) => {
   }
 });
 
-router.add("DELETE", talkPath, async (server, title) => {
-  if (title in server.talks) {
-    delete server.talks[title];
+router.add("DELETE", talkPath, async (server, talkId) => {
+  if (talkId in server.talks) {
+    delete server.talks[talkId];
     await server.updated();
   }
   return {
@@ -104,7 +105,10 @@ router.add("PUT", talkPath, async (server, title, request) => {
       body: "Bad talk data",
     };
   }
-  server.talks[title] = {
+  const generatedId = uuidv4();
+
+  server.talks[generatedId] = {
+    id: generatedId,
     title,
     presenter: talk.presenter,
     summary: talk.summary,
@@ -117,7 +121,7 @@ router.add("PUT", talkPath, async (server, title, request) => {
   };
 });
 
-router.add("POST", /^\/talks\/([^\/]+)\/comments$/, async (server, title, request) => {
+router.add("POST", /^\/talks\/([^\/]+)\/comments$/, async (server, talkId, request) => {
   let requestBody = await readStream(request);
   let comment;
   try {
@@ -134,8 +138,8 @@ router.add("POST", /^\/talks\/([^\/]+)\/comments$/, async (server, title, reques
       status: 400,
       body: "Bad comment data",
     };
-  } else if (title in server.talks) {
-    server.talks[title].comments.push(comment);
+  } else if (talkId in server.talks) {
+    server.talks[talkId].comments.push(comment);
     await server.updated();
     return {
       status: 204,
@@ -143,16 +147,16 @@ router.add("POST", /^\/talks\/([^\/]+)\/comments$/, async (server, title, reques
   } else {
     return {
       status: 404,
-      body: `No talk '${title} found`,
+      body: `No talk '${talkId} found`,
     };
   }
 });
 
 SkillShareServer.prototype.talkResponse = async function () {
-  let talksList = [];
-  for (let title of Object.keys(this.talks)) {
-    talksList.push(this.talks[title]);
-  }
+  // let talksList = [];
+  // for (let title of Object.keys(this.talks)) {
+  //   talksList.push(this.talks[title]);
+  // }
   async function saveTalks(talks) {
     await writeFile("./data.json", talks);
   }
@@ -160,7 +164,7 @@ SkillShareServer.prototype.talkResponse = async function () {
   
   
   return {
-    body: JSON.stringify(talksList),
+    body: JSON.stringify(this.talks),
     headers: {
       "Content-Type": "application/json",
       ETag: `${this.version}`,
