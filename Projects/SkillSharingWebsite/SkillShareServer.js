@@ -153,10 +153,6 @@ router.add("POST", /^\/talks\/([^\/]+)\/comments$/, async (server, talkId, reque
 });
 
 SkillShareServer.prototype.talkResponse = async function () {
-  // let talksList = [];
-  // for (let title of Object.keys(this.talks)) {
-  //   talksList.push(this.talks[title]);
-  // }
   async function saveTalks(talks) {
     await writeFile("./data.json", talks);
   }
