@@ -1,0 +1,74 @@
+<canvas height="600" width="1000"></canvas>
+
+<script>
+  const cx = document.querySelector('canvas').getContext('2d');
+  // trapezoid
+  cx.beginPath();
+  cx.moveTo(10, 90);
+  cx.lineTo(100, 90);
+  cx.lineTo(80, 60);
+  cx.lineTo(30, 60);
+  cx.closePath();
+  cx.stroke();
+
+  // romb red
+  cx.save();
+  cx.rotate(Math.PI / 4);
+  cx.fillStyle = 'red';
+  cx.fillRect(150, -100, 60, 60);
+  cx.restore();
+
+  // zig zag line
+  cx.beginPath();
+  cx.moveTo(300, 30);
+  for (let i = 3; i < 20; i++) {
+    const x = i % 2 == 1 ? 300 : 350;
+    const y = i * 10;
+    cx.lineTo(x, y);
+  }
+  cx.stroke();
+
+  // spiral
+  cx.beginPath();
+  let centerX = 450;
+  let centerY = 100;
+  let radius = 1;
+  let currentAngle = Math.PI;
+  
+  for (let i = 1; i < 100; i++) {
+    let x = radius * Math.cos(currentAngle);
+    let y = radius * Math.sin(currentAngle);
+    currentAngle += Math.PI * 2 / 20;
+
+    if (i == 1) {
+      cx.moveTo(centerX + x, centerY + y);
+    }
+    cx.lineTo(centerX + x, centerY + y)
+    radius += 0.5;
+  }
+  cx.stroke();
+
+  // yellow start
+
+  cx.beginPath();
+  centerX = 650;
+  centerY = 100;
+  radius = 50;
+  let numberOfParts = 5;
+  currentAngle = Math.PI;
+  let x = radius * Math.sin(currentAngle);
+  let y = radius * Math.cos(currentAngle);
+  cx.moveTo(centerX + x, centerY + y);
+
+  for (let i = 0; i < numberOfParts; i++) {
+    const sliceAngle = 2 * Math.PI / numberOfParts;
+    currentAngle += sliceAngle;
+    const nextX = radius * Math.sin(currentAngle);
+    const nextY = radius * Math.cos(currentAngle);
+    cx.quadraticCurveTo(centerX, centerY, centerX + nextX, centerY + nextY);
+    x = nextX;
+    y = nextY;
+  }
+  cx.fillStyle = 'yellow';
+  cx.fill();
+</script>

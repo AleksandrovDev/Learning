@@ -1,0 +1,66 @@
+<p>Click somewhere</p>
+<script>
+  // window.onmousemove = () => {
+  //   console.log('You knocked?');
+  //   alert('You knocked?');
+  // }
+  let x = 200;
+  let y = 200;
+  setInterval(draw, 50)
+
+  function draw() {
+    const colors = ['black', 'red', 'blue', 'orange', 'purple', 'yellow', 'maroon', 'fuchsia', 'lime', 'navy', 'aqua'];
+    let div = document.createElement('div');
+    let textNode = document.createTextNode('.');
+    div.appendChild(textNode);
+
+    div.style.position = 'absolute';
+    const moves = [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6];
+    x += moves[Math.floor(Math.random() * (moves.length))];
+    y += moves[Math.floor(Math.random() * (moves.length))];
+    div.style.top = y;
+    div.style.left = x;
+    let color = Math.floor(Math.random() * (colors.length - 1));
+    div.style.color = colors[color];
+    div.style.fontSize = '100px';
+    document.body.appendChild(div);
+  }
+
+  for (let i = 0; i < 1000; i++) {
+    const colors = ['black', 'red', 'blue', 'orange', 'purple', 'yellow', 'maroon', 'fuchsia', 'lime', 'navy', 'aqua'];
+    let div = document.createElement('div');
+    let textNode = document.createTextNode('.');
+    div.appendChild(textNode);
+
+    div.style.position = 'absolute';
+    const moves = [-1, 0, 1];
+    x += moves[Math.floor(Math.random() * (moves.length))];
+    y += moves[Math.floor(Math.random() * (moves.length))];
+    div.style.top = y;
+    div.style.left = x;
+    let color = Math.floor(Math.random() * (colors.length - 1));
+    div.style.color = colors[color];
+    div.style.fontSize = '100px';
+    document.body.appendChild(div);
+  }
+  
+
+  window.addEventListener('mousemove', (event) => {
+    const colors = ['black', 'red', 'blue', 'orange', 'purple', 'yellow', 'maroon', 'fuchsia', 'lime', 'navy', 'aqua'];
+    console.log('moving', event.clientX, event.clientY);
+    let div = document.createElement('div');
+    let textNode = document.createTextNode('.');
+    div.appendChild(textNode);
+
+    div.style.position='absolute';
+    div.style.top = event.clientY;
+    div.style.left = event.clientX;
+    console.log(Math.floor(Math.random() * (colors.length - 1)));
+    let color = Math.floor(Math.random() * (colors.length - 1));
+    console.log(colors[Math.floor(Math.random() * (colors.length - 1))])
+    div.style.color = colors[color];
+    div.style.fontSize = '150px';
+    document.body.appendChild(div);
+  })
+  
+</script>

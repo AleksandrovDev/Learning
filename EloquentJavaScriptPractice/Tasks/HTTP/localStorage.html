@@ -1,0 +1,14 @@
+<h1>Hello<h2></h2></h1>
+<label>
+  <input type="text">
+</label>
+
+<script>
+  let displayName = document.querySelector('h2');
+  displayName.textContent = localStorage.getItem('user');
+  let name = document.querySelector('input');
+  name.addEventListener('input', () => {
+    localStorage.setItem('user', name.value);
+    displayName.textContent = localStorage.getItem('user');
+  })
+</script>

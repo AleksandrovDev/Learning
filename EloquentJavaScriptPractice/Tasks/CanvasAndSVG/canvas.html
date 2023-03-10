@@ -1,0 +1,13 @@
+<p>Before canvas</p>
+<canvas></canvas>
+<p>After canvas</p>
+
+<script>
+  let context = document.querySelector('canvas').getContext("2d");
+  context.fillStyle = "red";
+  context.fillRect(10, 10, 100, 50);
+  context.strokeStyle = 'green';
+  context.strokeRect(10, 60, 100, 50);
+  context.lineWidth = 5;
+  context.strokeRect(10, 110, 100, 50);
+</script>

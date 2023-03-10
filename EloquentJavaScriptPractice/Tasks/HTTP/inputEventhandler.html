@@ -1,0 +1,11 @@
+<textarea></textarea>
+<p id="length"></p>
+
+<script>
+  let textarea = document.querySelector('textarea');
+  let lengthValue = document.querySelector('#length')
+  textarea.addEventListener('input', event => {
+    console.log(1);
+    lengthValue.textContent = textarea.value;
+  })
+</script>

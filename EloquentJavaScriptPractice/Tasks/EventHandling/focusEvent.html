@@ -1,0 +1,21 @@
+<p help="Your full name">Name: <input type="text" data-help="Your full name"></p>
+<p help="Your full name">Age: <input type="text" data-help="Your age"></p>
+<p id="help"></p>
+
+<script>
+  let help = document.querySelector('#help');
+  let fields = document.querySelectorAll('input');
+  console.log(fields);
+  for (let field of Array.from(fields)) {
+    console.log(field);
+    field.addEventListener('focus', event => {
+      let text = event.target.getAttribute('help');
+      console.log(text);
+      help.textContent = text;
+    });
+    field.addEventListener('blur', event => {
+      help.textContent = '';
+    })
+  }
+
+</script>

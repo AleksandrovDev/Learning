@@ -1,0 +1,15 @@
+<p>The <img src='img/cat.png' alt='cat' width="100px"> in the <img src='img/hat.png' alt="hat" width="100px">.</p>
+<button onclick="replaceImages()">Replace images</button>
+
+<script>
+  function replaceImages() {
+    let images = document.getElementsByTagName('img'); // here images is alive list so it is updaing every iteration
+    for (let i = images.length - 1; i >= 0; i--) {
+      const image = images[i];
+      if (image.alt) {
+        let textNode = document.createTextNode(image.alt);
+        image.parentNode.replaceChild(textNode, image);
+      }
+    }
+  }
+</script>

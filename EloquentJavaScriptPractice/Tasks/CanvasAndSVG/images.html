@@ -1,0 +1,12 @@
+<canvas width="1200" height="1000"></canvas>
+
+<script>
+  let cx = document.querySelector('canvas').getContext('2d');
+  let img = document.createElement('img');
+  img.src = './hat.png';
+  img.addEventListener('load', () => {
+    for (let x = 10; x < 100; x+=30) {
+      cx.drawImage(img, x, 10, 50, 50);
+    }
+  });
+</script>

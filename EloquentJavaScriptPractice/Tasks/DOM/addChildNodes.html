@@ -1,0 +1,23 @@
+<blockquote id="blockquote">
+  This is my blockquote!
+</blockquote>
+<button onclick="addText()">Add text</button>
+
+<script>
+  function elt(type, ...children) {
+    let node = document.createElement(type);
+    for (let child of children) {
+      if (typeof child == 'string') {
+        node.appendChild(document.createTextNode(child));
+      } else {
+        node.appendChild(child);
+      }
+    }
+    return node;
+  }
+
+  function addText() {
+    document.getElementById('blockquote').appendChild(
+    elt('footer', '-', elt('strong', 'Strong text'), elt('h1', 'header1'))
+  )}
+</script>

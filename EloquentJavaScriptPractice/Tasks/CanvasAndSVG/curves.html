@@ -1,0 +1,12 @@
+<canvas></canvas>
+<script>
+  const cx = document.querySelector('canvas').getContext('2d');
+  cx.beginPath();
+  cx.moveTo(10, 90);
+  // control 60, 5 finalPoint 90, 150
+  cx.quadraticCurveTo(60, 5, 90, 150);
+  cx.lineTo(60, 5);
+  cx.closePath();
+  cx.stroke();
+
+</script>
