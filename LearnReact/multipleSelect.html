@@ -1,0 +1,60 @@
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+
+  class MultipleSelect extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        selectedItems: [],
+      };
+    }
+
+    handleChange(e) {
+      console.log(e.target.value);
+      console.log(e.target);
+      console.log(e.target.getAttribute('cust'));
+      this.setState((state) => {
+        if (state.selectedItems.includes(e.target.cust)) {
+          state.selectedItems.splice(state.selectedItems.indexOf(e.target.cust), 1);
+        } else {
+          state.selectedItems.push(e.target.cust);
+        }
+        return {
+          selectedItems: state.selectedItems,
+        };
+      });
+    }
+
+    handleSubmit(e) {
+      alert(`Your favourite cars are: ${this.state.selectedItems}`);
+      e.preventDefault();
+    }
+
+    render() {
+      return (
+        <form onSubmit={(e) => this.handleSubmit(e)}>
+          <label>
+            Choose your favourite car:
+            <select
+              multiple={true}
+              value={this.state.selectedItems}
+              onChange={() => {}}
+            >
+              <option cust ={'test'} value={'Tesla'} onClick={(e) => this.handleChange(e)}>Tesla</option>
+              <option cust ={'test2'} value={'Honda'} onClick={(e) => this.handleChange(e)}>onda</option>
+            </select>
+          </label>
+          <input type={'Submit'} />
+        </form>
+      );
+    }
+  }
+
+  root.render(<MultipleSelect />);
+</script>

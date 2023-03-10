@@ -1,0 +1,52 @@
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  
+  const Child = React.forwardRef((props, ref) => {
+    console.log(ref);
+    React.useEffect(() => {
+      console.log('Child effect')
+      return () => console.log('Child unmounted!')
+    }, [])
+    return <input ref={ref} type='text' />
+  })
+  
+  // class Parent extends React.Component {
+  //   constructor(props) {
+  //     super(props);
+  //     this.inputRef = React.createRef();
+  //   }
+    
+  //   componentDidMount() {
+  //     console.log(this.inputRef.current.focus());
+  //   }
+    
+  //   render() {
+  //     return <Child inputRef={this.inputRef} />
+  //   }
+  // }
+  
+  const Parent = (props) => {
+    const inputRef = React.createRef();
+    const [whatWeRender, setWhatWeRender] = React.useState(<Child ref={inputRef} />)
+    
+    React.useEffect(() => {
+      console.log('Parent Effect');
+      inputRef.current?.focus();
+      return () => console.log('Parent unmounted!');
+    }, [])
+    
+    return <> 
+    {whatWeRender}
+    <button onClick={() => { setWhatWeRender(null) }}>Unmount child!</button>
+    <button onClick={() => { setWhatWeRender(<Child ref={inputRef} />) }}>Mount child!</button></>
+  }
+  
+  root.render(<Parent />);
+  
+</script>

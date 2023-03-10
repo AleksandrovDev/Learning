@@ -1,0 +1,64 @@
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  
+  const simpleForm = <form>
+      <label>
+        Name:
+        <input
+          type='text'
+          name='name'
+        />
+      </label>
+      <input
+        type='submit'
+        value='Send'
+      />
+    </form>
+    
+  
+  class NameForm extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        name: '',
+      }
+    }
+    
+    handleChange(e) {
+      this.setState((state) => ({ name: e.target.value }))
+    }
+    
+    handleSubmit(e) {
+      alert(this.state.name);
+      e.preventDefault();
+    }
+    
+    render() {
+      return <form onSubmit={(e) => this.handleSubmit(e)}>
+      <label>
+        Name:
+        <input
+          type='text'
+          value={this.state.name}
+          onChange={this.handleChange.bind(this)}
+        />
+      </label>
+      <input
+        type='submit'
+        value='Send'
+      />
+    </form>
+    }
+  }
+  
+
+  root.render(
+    <NameForm />
+  );
+</script>

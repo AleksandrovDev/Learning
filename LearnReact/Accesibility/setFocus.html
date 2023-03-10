@@ -1,0 +1,42 @@
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  
+  class CustomTextInput extends React.Component {
+    constructor(props) {
+      super(props);
+      this.textInput = React.createRef();
+      // this.focus = this.focus.bind(this);
+    }
+    
+    componentDidMount() {
+      console.log("mounted")
+      
+      this.focus();
+    }
+    
+    focus = () => {
+      // console.log('In focus');
+      console.log(this.textInput);
+      this.textInput.current?.focus();
+    }
+
+    render() {
+      console.log(this.textInput);
+      
+      return (
+        <div>
+          <input type='text' ref={this.textInput} />
+          <button onClick={() => this.focus()}>Focus on input</button>
+          </div>)
+    }
+  }
+  
+  root.render(<CustomTextInput />)
+
+</script>

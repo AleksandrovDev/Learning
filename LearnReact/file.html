@@ -1,0 +1,25 @@
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  function readFile(file) {
+    const reader = new FileReader();
+    reader.addEventListener('load', (event) => {
+      const result = event.target.result;
+      console.log(result);
+    });
+    reader.readAsText(file);
+    // console.log(reader.readAsText(file))
+  }
+  
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  
+  root.render(<form onSubmit={(e) => {console.log(e.target); e.preventDefault()}}>
+    <input type='file' onChange={(e) => {
+      readFile(e.target.files[0]);
+    }}/>
+  <input type='submit' value='asda' /></form>)
+</script>

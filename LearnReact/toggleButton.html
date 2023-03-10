@@ -1,0 +1,32 @@
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+
+  class Toggle extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        isToggledOn: false,
+      };
+      
+      // this.toggleHandler = this.toggleHandler.bind(this);
+    }
+    
+    toggleHandler() {
+      this.setState((state) => ({
+        isToggledOn: !state.isToggledOn,
+      }))
+    }
+
+    render() {
+      return <button onClick={this.toggleHandler.bind(this)}>{this.state.isToggledOn ? 'On' : 'Off'}</button>;
+    }
+  }
+
+  root.render(<Toggle />);
+</script>

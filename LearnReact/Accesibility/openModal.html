@@ -1,0 +1,74 @@
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+
+  class OuterClick extends React.Component {
+    constructor(props) {
+      super(props);
+      this.toggleContainer = React.createRef();
+      this.state = {
+        isOpen: false,
+      };
+
+      this.onClickOutsideHandler = this.onClickOutsideHandler.bind(this);
+    }
+
+    componentDidMount() {
+      window.addEventListener('click', this.onClickOutsideHandler);
+    }
+
+    componentDidUpdate() {
+      window.addEventListener('click', this.onClickOutsideHandler);
+    }
+
+    handleClick() {
+      this.setState({ isOpen: !this.state.isOpen });
+      console.log(this.state.isOpen);
+    }
+
+    onClickOutsideHandler(event) {
+      console.log('Clicked outside');
+      console.log(this.toggleContainer.current);
+      console.log(event.target);
+      if (this.state.isOpen && !this.toggleContainer.current.contains(event.target)) {
+        this.setState({ isOpen: false });
+      }
+    }
+
+    render() {
+      console.log('render');
+      return (
+        <>
+          <div ref={this.toggleContainer}>
+            <select>
+              <option>Option 1</option>
+              <option>Option 2</option>
+              <option>Option 3</option>
+            </select>
+            <button onClick={() => this.handleClick()} onBlur={() => this.setState({isOpen: false})}>Select Option</button>
+            {this.state.isOpen ? (
+              <ul style={{ position: 'absolute' }}>
+                <li>Item one</li>
+                <li>Item two</li>
+                <li>Item three</li>
+              </ul>
+            ) : null}
+          </div>
+          <div><button>Next button</button></div>
+          <div><button>Next button</button></div>
+          <div><button>Next button</button></div>
+          <ul>
+            <li>Item one</li>
+          </ul>
+        </>
+      );
+    }
+  }
+
+  root.render(<OuterClick />);
+</script>

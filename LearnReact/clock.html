@@ -1,0 +1,26 @@
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+  function Clock(props) {
+    const [time, setTime] = React.useState(new Date().toLocaleTimeString());
+
+    setInterval(() => setTime(new Date().toLocaleTimeString()));
+
+    return (
+      <>
+        <h1>{props.message}</h1>
+        <h2>
+          {props.children}
+          {time}
+        </h2>
+      </>
+    );
+  }
+
+  root.render(<Clock message='Independent clock component!' />);
+</script>

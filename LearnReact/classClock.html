@@ -1,0 +1,46 @@
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+<script type="text/babel">
+  const root = ReactDOM.createRoot(document.getElementById('root'));
+
+  class Clock extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        date: null,
+      };
+    }
+
+    componentDidMount() {
+      setTimeout(() => {
+        return this.timerId = setInterval(this.tick.bind(this), 1000);
+      }, this.props.delay * 1000);
+    }
+
+    componentWillUnmount() {
+      clearTimeout(this.timerId);
+    }
+
+    tick() {
+      this.setState((state, props) => ({
+        date: new Date(),
+      }));
+    }
+
+    render() {
+      return <h1>{this.state.date ? this.state.date.toLocaleTimeString() : ''}</h1>;
+    }
+  }
+
+  root.render(
+    <div>
+      <Clock delay={0} />
+      <Clock delay={5} />
+      <Clock delay={10} />
+    </div>,
+  );
+</script>
