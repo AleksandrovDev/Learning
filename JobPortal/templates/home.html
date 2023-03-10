@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<form {% if staff %}action="/vacancy/new"{% else %}action="/resume/new"{% endif%} method="post">{% csrf_token %}
+<table>{{ create_description_form.as_table }}</table>
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>
