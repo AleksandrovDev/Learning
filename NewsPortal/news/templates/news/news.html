@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    {% load static %}
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+<div>
+<h2>Новостной портал</h2>
+<form action="/news/" method="get">
+    <p>Поиск</p>
+    <input type="text" name="q">
+</form>
+
+{% for date, info in news.items %}
+
+<h4>{{ date }}</h4>
+<ul>
+    {% for j in info %}
+    <li><a target="_self" href="/news/{{j.link}}/">{{ j.title }}</a></li>
+    {% endfor %}
+</ul>
+{% endfor %}
+
+<a target="_self" href="/news/create/">Добавить новость</a>
+
+</div>
+</body>
+</html>
