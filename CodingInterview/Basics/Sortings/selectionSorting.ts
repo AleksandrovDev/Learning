@@ -7,23 +7,25 @@ import { swapArrayElements, unsortedArray } from './utils';
 // Complexity n^2
 
 function selectionSorting<T>(array: T[], order: 'ASC' | 'DESC') {
-  for (let i = 0; i < array.length; i++) {
+  const result = [...array];
+  for (let i = 0; i < result.length; i++) {
     let maxOrMinIndex = i;
 
-    for (let j = i; j < array.length; j++) {
+    for (let j = i; j < result.length; j++) {
       const condition =
         order === 'ASC'
-          ? array[j] < array[maxOrMinIndex]
-          : array[j] > array[maxOrMinIndex];
+          ? result[j] < result[maxOrMinIndex]
+          : result[j] > result[maxOrMinIndex];
 
       if (condition) {
         maxOrMinIndex = j;
       }
     }
 
-    swapArrayElements(array, maxOrMinIndex, i);
+    swapArrayElements(result, maxOrMinIndex, i);
   }
-  console.log(array);
+  console.log(result);
+  return result;
 }
 
 selectionSorting(unsortedArray, 'DESC');
