@@ -7,7 +7,7 @@
     {
       "type": "node",
       "runtimeArgs": ["-r", "ts-node/register"],
-      "args": ["${workspaceFolder}/Basics/insertionSorting.ts"],
+      "args": ["${workspaceFolder}/Basics/MovingZerosToTheEnd/movingZerosToTheEnd.ts"],
       "request": "launch",
       "name": "Debug",
       "skipFiles": ["<node_internals>/**"]
