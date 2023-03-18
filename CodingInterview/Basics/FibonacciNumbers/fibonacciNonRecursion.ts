@@ -1,5 +1,6 @@
 // Fibonacci sequence it is number sequence where every second number is the sum of the two previous
 // n - the index of the sequence to return
+
 function fibonacci(n: number) {
   if (n === 0 || n === 1) {
     return n;
