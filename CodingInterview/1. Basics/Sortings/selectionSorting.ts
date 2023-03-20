@@ -1,4 +1,4 @@
-import { swapArrayElements, unsortedArray } from './utils';
+import { swapArrayElements, unsortedArray } from '../../utils';
 
 // 1. keep sorted part and unsorted
 // 2. find min/max element in unsorted part and move it to start/end

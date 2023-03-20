@@ -5,7 +5,7 @@
 // 5. If swapped, check first and second element.If no check next elements.
 // 6. Repeat step 4.
 
-import { swapArrayElements, unsortedArray } from './utils';
+import { swapArrayElements, unsortedArray } from '../../utils';
 
 function insertionSorting<T>(array: T[]) {
   const result = [...array];
