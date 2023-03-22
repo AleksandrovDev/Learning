@@ -2,19 +2,26 @@
 
 // input contains only bracket values
 
-type parenthesesKeys = '(' | '{' | '[';
+type OpenParentheses = '(' | '{' | '[';
+
+const isValidInput = (s: string): s is OpenParentheses =>
+  /^[()[\]{}]+$/.test(s);
 
 function isValidParenthesesRefactored(s: string) {
+  if (!isValidInput(s)) {
+    throw new Error('Not valid input');
+  }
+
   const parenthesesStack = [];
-  const parenthesesMap: { [key in parenthesesKeys]: string } = {
+  const parenthesesMap: { [key in OpenParentheses]: string } = {
     '(': ')',
     '{': '}',
     '[': ']',
   };
 
   for (let w of s) {
-    if (parenthesesMap[w as parenthesesKeys]) {
-      parenthesesStack.push(parenthesesMap[w as parenthesesKeys]);
+    if (parenthesesMap[w as OpenParentheses]) {
+      parenthesesStack.push(parenthesesMap[w as OpenParentheses]);
       continue;
     }
 
@@ -26,7 +33,7 @@ function isValidParenthesesRefactored(s: string) {
   return !parenthesesStack.length;
 }
 
-console.log(isValidParenthesesRefactored('[][][][][][]]'));
+console.log(isValidParenthesesRefactored('{}{)[][][][][][]]'));
 console.log(isValidParenthesesRefactored('[][][][][][]'));
 console.log(isValidParenthesesRefactored('[][][]())[][]]'));
 console.log(isValidParenthesesRefactored('[][][]()[][]'));
