@@ -6,7 +6,6 @@ import { unsortedArray } from '../utils';
 // 4. Merging sorted lists T(n)
 // 5. So in total it is 2T(n / 2) + T(n) => O(Nlog(n))
 
-
 // Time complexity: O(Nlog(n))
 
 function mergeSort(array: number[]) {
