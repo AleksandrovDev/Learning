@@ -61,6 +61,15 @@ class ListNode {
 // head and tail is dummy references
 
 class LRUcacheLinkedList {
+  static ListNode = class {
+    constructor(
+      public readonly key?: number,
+      public value?: number,
+      public prevValue?: ListNode,
+      public nextValue?: ListNode,
+    ) {}
+  }
+
   public readonly cacheMap = new Map<number, ListNode>();
 
   private head = new ListNode();

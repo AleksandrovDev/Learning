@@ -10,8 +10,7 @@
 4. What is the event loop?
  - Allows to perform non blocking I/O operations
  - Way to use single threaded language to perform multiple operations, by off loading operations to the system kernel whenever possible.
- - Multiple operations executed in the background, when one of these operations completes,
- it tells NodeJS, so the appropriate callback can be added to the proper queue.
+ - Multiple operations executed in the background, when one of these operations completes, it tells NodeJS, so the appropriate callback can be added to the proper queue.
  - ![](./eventLoopPhases.jpg)
 
 5. What is callbacks in NodeJS?
@@ -60,4 +59,13 @@
   - Client can get data from different resourses with single endpoint.
   - Allows to have more flexibility and reduce amount of unused data.
   
-
+17. What is just in time compilation?
+ - it is compilation that is being done during the execution of the program.
+ - it can optimize most frequently used code
+ - it is byte code => machine code
+ - another examples of JIT are JVM and CLR
+ 
+18. What is the difference between compiler and interpreter?
+ - compiler transpile all code in advance and then execute
+ - interpreter transpile and execute line by line
+ - ![](./compilerVsInterpreter.jpg)
