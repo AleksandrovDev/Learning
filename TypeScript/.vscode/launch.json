@@ -10,7 +10,8 @@
       "args": ["${file}"],
       "request": "launch",
       "name": "Debug",
-      "skipFiles": ["<node_internals>/**"]
+      "skipFiles": ["<node_internals>/**"],
+      "console": "integratedTerminal",
     }
   ]
 }
