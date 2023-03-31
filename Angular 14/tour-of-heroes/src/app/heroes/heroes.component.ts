@@ -1,21 +1,27 @@
 import { Component } from '@angular/core';
 import { Hero } from '../hero';
+import { HeroService } from '../hero.service';
+import { MessageService } from '../message.service';
 import { HEROES } from '../mockHeroes';
 
 @Component({
   selector: 'app-heroes',
   templateUrl: './heroes.component.html',
-  styleUrls: ['./heroes.component.css']
+  styleUrls: ['./heroes.component.css'],
 })
 export class HeroesComponent {
-  heroes: Hero[] = HEROES;
-  selectedHero: Hero | undefined;
-  hero: Hero = {
-    id: 0,
-    name: 'Windstorm',
+  heroes: Hero[] = [];
+
+  constructor(
+    private heroService: HeroService,
+    private messageService: MessageService,
+  ) {}
+
+  getHeroes(): void {
+    this.heroService.getHeroes().subscribe((heroes) => (this.heroes = heroes));
   }
-  
-  onSelect(hero: Hero): void {
-    this.selectedHero = hero;
+
+  ngOnInit(): void {
+    this.getHeroes();
   }
 }
