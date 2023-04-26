@@ -1,0 +1,29 @@
+<div *ngIf="account">
+  {{account.currency}} {{ account.currentSum }}
+  <button (click)="toggleHistory(account)">
+    {{ account.isToggled ? 'Hide history' : 'Display history' }}
+  </button>
+  <div>
+    <input #amount type="text">
+    <button type="button" (click)="addTransaction(amount.value); amount.value=''">Add transaction</button>
+  </div>
+    <div
+    *ngIf="account.isToggled"
+    id="asset"
+  >
+    {{ account.incomes.length > 0 ? 'Incomes:' : '' }}
+    <div
+      [ngClass]="'income'"
+      *ngFor="let income of account.incomes"
+    >
+      {{ income.amount }}
+    </div>
+    {{ account.expenses.length > 0 ? 'Expenses:' : '' }}
+    <div
+      style="color: red"
+      *ngFor="let expense of account.expenses"
+    >
+      {{ expense.amount }}
+    </div>
+  </div>
+</div>

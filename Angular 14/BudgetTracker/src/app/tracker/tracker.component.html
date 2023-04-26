@@ -1,0 +1,39 @@
+<h2 [ngStyle]="{ color: currentBudget > 0 ? 'green' : 'red' }">
+  Current budget: {{ currentBudget | currency }}
+</h2>
+
+<p>Incomes:</p>
+<div
+  *ngIf="hideIncome"
+  [innerText]="income"
+></div>
+
+<button
+  type="button"
+  class="btn btn-primary"
+  tooltip="das"
+  (click)="toggle()"
+>
+  Toggle
+</button>
+
+<div *ngIf="accounts.length > 0">
+  <h2>Current assets:</h2>
+  <div *ngFor="let account of accounts">
+    <budget-account
+      [account]="account"
+      (updatedAccount)="showUpdateMessage($event)"
+      budget-account
+    ></budget-account>
+  </div>
+</div>
+
+{{ accounts.length === 0 ? 'No accounts' : '' }}
+
+<div [ngSwitch]="role">
+  <div *ngSwitchCase="'User'">Welcome user!</div>
+  <div *ngSwitchCase="'Admin'">Welcome admin!</div>
+  <div *ngSwitchDefault>Who are you?</div>
+</div>
+
+<p *ngIf="message">{{ message }}</p>
