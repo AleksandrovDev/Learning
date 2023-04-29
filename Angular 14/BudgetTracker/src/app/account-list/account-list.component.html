@@ -1,0 +1,9 @@
+<div *ngIf="accounts.length > 0">
+  <h2>{{ title }}</h2>
+  <div *ngFor="let account of accounts">
+    <budget-account
+      [account]="account"
+      (updatedAccount)="showUpdateMessage($event)"
+    ></budget-account>
+  </div>
+</div>

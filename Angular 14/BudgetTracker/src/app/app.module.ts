@@ -7,12 +7,18 @@ import { TrackerComponent } from './tracker/tracker.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { AccountComponent } from './account/account.component';
+import { AccountListComponent } from './account-list/account-list.component';
+import { HeaderComponent } from './header/header.component';
+import { ContainerComponent } from './container/container.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TrackerComponent,
-    AccountComponent
+    AccountComponent,
+    AccountListComponent,
+    HeaderComponent,
+    ContainerComponent
   ],
   imports: [
     BrowserModule,

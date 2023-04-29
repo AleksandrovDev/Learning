@@ -1,34 +1,33 @@
+<budget-header></budget-header>
+<budget-header></budget-header>
+<budget-header></budget-header>
 <h2 [ngStyle]="{ color: currentBudget > 0 ? 'green' : 'red' }">
   Current budget: {{ currentBudget | currency }}
 </h2>
 
 <p>Incomes:</p>
-<div
-  *ngIf="hideIncome"
-  [innerText]="income"
-></div>
+<div *ngIf="hideIncome" [innerText]="income"></div>
 
-<button
-  type="button"
-  class="btn btn-primary"
-  tooltip="das"
-  (click)="toggle()"
->
+<button type="button" class="btn btn-primary" tooltip="das" (click)="toggle()">
   Toggle
 </button>
-
-<div *ngIf="accounts.length > 0">
+<budget-account-list
+  [accounts]="accounts"
+  [title]="title"
+  (updatedAccount)="showUpdateMessage($event)"
+></budget-account-list>
+<!-- <div *ngIf="accounts.length > 0">
   <h2>Current assets:</h2>
   <div *ngFor="let account of accounts">
     <budget-account
       [account]="account"
-      (updatedAccount)="showUpdateMessage($event)"
+      
       budget-account
     ></budget-account>
   </div>
-</div>
+</div> -->
 
-{{ accounts.length === 0 ? 'No accounts' : '' }}
+{{ accounts.length === 0 ? "No accounts" : "" }}
 
 <div [ngSwitch]="role">
   <div *ngSwitchCase="'User'">Welcome user!</div>
@@ -37,3 +36,8 @@
 </div>
 
 <p *ngIf="message">{{ message }}</p>
+
+<div>
+  <!-- <input type="text"> -->
+  <button type="button" (click)="addAccount()">Add new account</button>
+</div>
