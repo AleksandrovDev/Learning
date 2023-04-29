@@ -10,6 +10,7 @@ import { AccountComponent } from './account/account.component';
 import { AccountListComponent } from './account-list/account-list.component';
 import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
+import { MonthViewComponent } from './month-view/month-view.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ContainerComponent } from './container/container.component';
     AccountComponent,
     AccountListComponent,
     HeaderComponent,
-    ContainerComponent
+    ContainerComponent,
+    MonthViewComponent
   ],
   imports: [
     BrowserModule,
