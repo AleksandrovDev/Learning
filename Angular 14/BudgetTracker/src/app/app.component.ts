@@ -2,6 +2,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  Inject,
   OnInit,
   Optional,
   ViewChild,
@@ -9,6 +10,7 @@ import {
 } from '@angular/core';
 import { TrackerComponent } from './tracker/tracker.component';
 import { LoggerService } from './logger.service';
+import { localStorageToken } from './local-storage.token';
 
 @Component({
   selector: 'budget-root',
@@ -31,13 +33,16 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   @ViewChild('name', { static: true }) name!: ElementRef;
 
-  constructor(@Optional() private readonly loggerService?: LoggerService) {
-
-  }
+  constructor(
+    @Inject(localStorageToken) private readonly localStorage: Storage,
+    @Optional() private readonly loggerService?: LoggerService
+  ) {}
 
   ngOnInit(): void {
     this.loggerService?.log('AppComponent.ngOnInit()');
     this.name.nativeElement.innerText = 'Budget tracker';
+
+    this.localStorage.setItem('name', 'Budget tracker');
   }
 
   ngAfterViewInit(): void {
