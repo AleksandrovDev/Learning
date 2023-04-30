@@ -11,6 +11,7 @@ import { AccountListComponent } from './account-list/account-list.component';
 import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { MonthViewComponent } from './month-view/month-view.component';
+import { APP_CONFIG, APP_SERVICE_CONFIG } from './app-config/app-config.service';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,10 @@ import { MonthViewComponent } from './month-view/month-view.component';
     BrowserAnimationsModule,
     TooltipModule.forRoot(),
   ],
-  providers: [],
+  providers: [{
+    provide: APP_SERVICE_CONFIG,
+    useValue: APP_CONFIG,
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

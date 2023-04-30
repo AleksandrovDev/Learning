@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Component,
   DoCheck,
+  Inject,
   OnDestroy,
   OnInit,
   QueryList,
@@ -13,6 +14,8 @@ import {
 import { Account } from '../account/account';
 import { HeaderComponent } from '../header/header.component';
 import { TrackerService } from './services/tracker.service';
+import { APP_SERVICE_CONFIG } from '../app-config/app-config.service';
+import { AppConfig } from '../app-config/app-config.interface';
 
 @Component({
   selector: 'budget-tracker',
@@ -48,11 +51,14 @@ export class TrackerComponent
   @ViewChildren(HeaderComponent)
   headerChildrenComponent!: QueryList<HeaderComponent>;
 
-  
-  constructor(@SkipSelf() private readonly trackerService: TrackerService) {} // use only for inject services, other logic place in ngOnInit
+  constructor(
+    @SkipSelf() private readonly trackerService: TrackerService,
+    @Inject(APP_SERVICE_CONFIG) private config: AppConfig // Inject value
+  ) {} // use only for inject services, other logic place in ngOnInit
 
   async ngOnInit(): Promise<void> {
     // use to fetch data from the API
+    console.log(this.config.apiUrl);
     this.accounts = this.trackerService.getAccounts();
     this.currentBudget = await this.trackerService.getCurrentBudget();
   }
