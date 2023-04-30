@@ -3,10 +3,12 @@ import {
   Component,
   ElementRef,
   OnInit,
+  Optional,
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
 import { TrackerComponent } from './tracker/tracker.component';
+import { LoggerService } from './logger.service';
 
 @Component({
   selector: 'budget-root',
@@ -29,7 +31,12 @@ export class AppComponent implements AfterViewInit, OnInit {
 
   @ViewChild('name', { static: true }) name!: ElementRef;
 
+  constructor(@Optional() private readonly loggerService?: LoggerService) {
+
+  }
+
   ngOnInit(): void {
+    this.loggerService?.log('AppComponent.ngOnInit()');
     this.name.nativeElement.innerText = 'Budget tracker';
   }
 

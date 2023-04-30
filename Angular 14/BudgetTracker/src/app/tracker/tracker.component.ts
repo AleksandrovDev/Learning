@@ -6,6 +6,7 @@ import {
   OnDestroy,
   OnInit,
   QueryList,
+  SkipSelf,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
@@ -47,7 +48,8 @@ export class TrackerComponent
   @ViewChildren(HeaderComponent)
   headerChildrenComponent!: QueryList<HeaderComponent>;
 
-  constructor(private readonly trackerService: TrackerService) {} // use only for inject services, other logic place in ngOnInit
+  
+  constructor(@SkipSelf() private readonly trackerService: TrackerService) {} // use only for inject services, other logic place in ngOnInit
 
   async ngOnInit(): Promise<void> {
     // use to fetch data from the API
