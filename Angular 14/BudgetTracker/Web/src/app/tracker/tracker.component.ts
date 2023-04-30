@@ -16,6 +16,7 @@ import { HeaderComponent } from '../header/header.component';
 import { TrackerService } from './services/tracker.service';
 import { APP_SERVICE_CONFIG } from '../app-config/app-config.service';
 import { AppConfig } from '../app-config/app-config.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'budget-tracker',
@@ -32,6 +33,13 @@ export class TrackerComponent
   accounts: Account[] = [];
   title = 'Current assets:';
   currentBudget = 0;
+
+  stream = new Observable<string>((observer) => {
+    observer.next('User 1');
+    observer.next('User 2');
+    observer.next('User 3');
+    observer.complete();
+  });
 
   toggle() {
     this.hideIncome = !this.hideIncome;
@@ -61,6 +69,11 @@ export class TrackerComponent
     console.log(this.config.apiUrl);
     this.trackerService.getAccounts().subscribe((accounts) => {
       this.accounts = accounts;
+    });
+    this.stream.subscribe({
+      next: (value) => console.log(value),
+      complete: () => console.log('complete'),
+      error: (err) => console.log(err),
     });
     this.currentBudget = await this.trackerService.getCurrentBudget();
   }
