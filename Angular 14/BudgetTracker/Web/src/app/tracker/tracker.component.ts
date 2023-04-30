@@ -59,7 +59,9 @@ export class TrackerComponent
   async ngOnInit(): Promise<void> {
     // use to fetch data from the API
     console.log(this.config.apiUrl);
-    this.accounts = this.trackerService.getAccounts();
+    this.trackerService.getAccounts().subscribe((accounts) => {
+      this.accounts = accounts;
+    });
     this.currentBudget = await this.trackerService.getCurrentBudget();
   }
 
@@ -92,7 +94,9 @@ export class TrackerComponent
 
   addAccount() {
     this.trackerService.addAccount();
-    this.accounts = this.trackerService.getAccounts();
+    this.trackerService.getAccounts().subscribe((accounts) => {
+      this.accounts = accounts;
+    });
   }
 }
 

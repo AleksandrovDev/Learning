@@ -74,7 +74,8 @@
               "browserTarget": "BudgetTracker:build:production"
             },
             "development": {
-              "browserTarget": "BudgetTracker:build:development"
+              "browserTarget": "BudgetTracker:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

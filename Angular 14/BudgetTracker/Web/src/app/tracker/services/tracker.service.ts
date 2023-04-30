@@ -1,53 +1,27 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
 import { Account } from 'src/app/account/account';
+import { AppConfig } from 'src/app/app-config/app-config.interface';
+import { APP_SERVICE_CONFIG } from 'src/app/app-config/app-config.service';
 
 @Injectable({
   // it will be removed from the bundle if it doesn't used anywhere
   providedIn: 'root', // means that service registered in provider in app.module
 })
 export class TrackerService {
-  accounts: Account[] = [
-    {
-      currency: 'RUB',
-      currentSum: 100000,
-      exchangeRate: 0.012,
-      isToggled: false,
-      incomes: [
-        {
-          time: new Date(),
-          amount: 100,
-        },
-      ],
-      expenses: [
-        {
-          time: new Date(),
-          amount: -200,
-        },
-      ],
-    },
-    {
-      currency: 'EUR',
-      exchangeRate: 1.1,
-      currentSum: 20000,
-      isToggled: false,
-      incomes: [
-        {
-          time: new Date(),
-          amount: 100,
-        },
-      ],
-      expenses: [],
-    },
-  ];
+  accounts: Account[] = [];
 
   currentBudget: number = 0;
 
-  constructor() {
+  constructor(
+    private readonly http: HttpClient,
+    // @Inject(APP_SERVICE_CONFIG) private config: AppConfig
+  ) {
     console.log('Tracker service initialized');
   }
 
   getAccounts() {
-    return this.accounts;
+    return this.http.get<Account[]>('/api/accounts');
   }
 
   async getCurrentBudget() {
