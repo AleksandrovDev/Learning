@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { MonthViewComponent } from './month-view/month-view.component';
 import { APP_CONFIG, APP_SERVICE_CONFIG } from './app-config/app-config.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -21,13 +22,14 @@ import { APP_CONFIG, APP_SERVICE_CONFIG } from './app-config/app-config.service'
     AccountListComponent,
     HeaderComponent,
     ContainerComponent,
-    MonthViewComponent
+    MonthViewComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     TooltipModule.forRoot(),
+    HttpClientModule,
   ],
   providers: [{
     provide: APP_SERVICE_CONFIG,
