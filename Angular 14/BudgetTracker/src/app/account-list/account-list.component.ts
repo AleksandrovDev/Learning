@@ -4,6 +4,7 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   Output,
   SimpleChanges,
 } from '@angular/core';
@@ -15,7 +16,7 @@ import { Account } from '../account/account';
   styleUrls: ['./account-list.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AccountListComponent implements OnChanges {
+export class AccountListComponent implements OnChanges, OnDestroy {
   @Input() accounts: Account[] = [];
   @Input() title: string = '';
   @Output() updatedAccount = new EventEmitter<Account>();
@@ -30,5 +31,9 @@ export class AccountListComponent implements OnChanges {
     if (changes['title']) {
       this.title = changes['title'].currentValue.toUpperCase();
     }
+  }
+
+  ngOnDestroy(): void {
+    console.log('Destoy account list called');
   }
 }

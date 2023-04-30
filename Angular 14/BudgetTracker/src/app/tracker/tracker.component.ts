@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Component,
   DoCheck,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChild,
@@ -17,7 +18,7 @@ import { HeaderComponent } from '../header/header.component';
   styleUrls: ['./tracker.component.less'],
 })
 export class TrackerComponent
-  implements OnInit, DoCheck, AfterViewInit, AfterViewChecked
+  implements OnInit, DoCheck, AfterViewInit, AfterViewChecked, OnDestroy
 {
   income = '20$';
   role = 'Admin';
@@ -120,6 +121,10 @@ export class TrackerComponent
   ngAfterViewChecked(): void {}
 
   // Don't use ngDoCheck and onChanges in the same component
+
+  ngOnDestroy(): void {
+    console.log('Destoy tracker called');
+  }
 
   showUpdateMessage(account: Account) {
     this.recalculateTotalSum();

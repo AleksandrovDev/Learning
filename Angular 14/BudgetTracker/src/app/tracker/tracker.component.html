@@ -5,27 +5,15 @@
   Current budget: {{ currentBudget | currency }}
 </h2>
 
-<p>Incomes:</p>
-<div *ngIf="hideIncome" [innerText]="income"></div>
-
 <button type="button" class="btn btn-primary" tooltip="das" (click)="toggle()">
   Toggle
 </button>
 <budget-account-list
+  *ngIf="hideIncome"
   [accounts]="accounts"
   [title]="title"
   (updatedAccount)="showUpdateMessage($event)"
 ></budget-account-list>
-<!-- <div *ngIf="accounts.length > 0">
-  <h2>Current assets:</h2>
-  <div *ngFor="let account of accounts">
-    <budget-account
-      [account]="account"
-      
-      budget-account
-    ></budget-account>
-  </div>
-</div> -->
 
 {{ accounts.length === 0 ? "No accounts" : "" }}
 
