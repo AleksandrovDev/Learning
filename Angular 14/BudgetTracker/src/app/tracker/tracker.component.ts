@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { Account } from '../account/account';
 import { HeaderComponent } from '../header/header.component';
+import { TrackerService } from './services/tracker.service';
 
 @Component({
   selector: 'budget-tracker',
@@ -22,21 +23,11 @@ export class TrackerComponent
 {
   income = '20$';
   role = 'Admin';
-
   message = '';
-
   hideIncome = false;
-
   accounts: Account[] = [];
-
   title = 'Current assets:';
-
-  // headerComponent
-
-  currentBudget = this.accounts.reduce(
-    (sum, acc) => (sum += acc.currentSum * acc.exchangeRate),
-    0
-  );
+  currentBudget = 0;
 
   toggle() {
     this.hideIncome = !this.hideIncome;
@@ -56,52 +47,12 @@ export class TrackerComponent
   @ViewChildren(HeaderComponent)
   headerChildrenComponent!: QueryList<HeaderComponent>;
 
-  constructor() {} // use only for inject services, other logic place in ngOnInit
+  constructor(private readonly trackerService: TrackerService) {} // use only for inject services, other logic place in ngOnInit
 
-  ngOnInit(): void {
-    // console.log(this.headerComponent);
-
+  async ngOnInit(): Promise<void> {
     // use to fetch data from the API
-    this.accounts = [
-      {
-        currency: 'RUB',
-        currentSum: 100000,
-        exchangeRate: 0.012,
-        isToggled: false,
-        incomes: [
-          {
-            time: new Date(),
-            amount: 100,
-          },
-        ],
-        expenses: [
-          {
-            time: new Date(),
-            amount: -200,
-          },
-        ],
-      },
-      {
-        currency: 'EUR',
-        exchangeRate: 1.1,
-        currentSum: 20000,
-        isToggled: false,
-        incomes: [
-          {
-            time: new Date(),
-            amount: 100,
-          },
-        ],
-        expenses: [],
-      },
-    ];
-
-    setTimeout(() => {
-      this.currentBudget = this.accounts.reduce(
-        (sum, acc) => (sum += acc.currentSum * acc.exchangeRate),
-        0
-      );
-    }, 1000);
+    this.accounts = this.trackerService.getAccounts();
+    this.currentBudget = await this.trackerService.getCurrentBudget();
   }
 
   ngDoCheck(): void {
@@ -127,31 +78,13 @@ export class TrackerComponent
   }
 
   showUpdateMessage(account: Account) {
-    this.recalculateTotalSum();
     this.message = `Account ${account.currency} has been updated!`;
     setTimeout(() => (this.message = ''), 2000);
   }
 
-  recalculateTotalSum() {
-    this.currentBudget = this.accounts.reduce(
-      (sum, acc) => (sum += acc.currentSum * acc.exchangeRate),
-      0
-    );
-  }
-
   addAccount() {
-    const account: Account = {
-      currency: 'USD',
-      currentSum: 3,
-      exchangeRate: 1,
-      incomes: [],
-      expenses: [],
-      isToggled: false,
-    };
-
-    this.accounts = [...this.accounts, account];
-
-    this.recalculateTotalSum();
+    this.trackerService.addAccount();
+    this.accounts = this.trackerService.getAccounts();
   }
 }
 
