@@ -1,9 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { Account, CreateAccountDto } from 'src/app/account/account';
 import { AppConfig } from 'src/app/app-config/app-config.interface';
 import { APP_SERVICE_CONFIG } from 'src/app/app-config/app-config.service';
-
 
 // TODO: account should be stored in service, as only source of truth
 @Injectable({
@@ -52,8 +51,8 @@ export class TrackerService {
       incomes: [
         {
           time: new Date(),
-          amount: 100
-        }
+          amount: 100,
+        },
       ],
       expenses: [],
       isToggled: false,
@@ -64,15 +63,14 @@ export class TrackerService {
 
   editAccount() {
     const account: CreateAccountDto = {
-     currency: 'USD_UPDATED'
+      currency: 'USD_UPDATED',
     };
-    
-    return this.http.patch<Account>('/api/accounts/0', account);
 
+    return this.http.patch<Account>('/api/accounts/0', account);
   }
 
   delete(id: string) {
-    return this.http.delete(`/api/accounts/${id}`)
+    return this.http.delete(`/api/accounts/${id}`);
   }
 
   recalculateTotalSum(accounts: Account[]) {
@@ -80,5 +78,17 @@ export class TrackerService {
       (sum, acc) => (sum += acc.currentSum * acc.exchangeRate),
       0
     );
+  }
+
+  getPhotos() {
+    const request = new HttpRequest(
+      'GET',
+      `https://jsonplaceholder.typicode.com/photos`,
+      {
+        reportProgress: true,
+      }
+    );
+
+    return this.http.request(request);
   }
 }

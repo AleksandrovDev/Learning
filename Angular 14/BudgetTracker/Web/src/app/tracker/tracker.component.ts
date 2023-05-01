@@ -17,6 +17,7 @@ import { TrackerService } from './services/tracker.service';
 import { APP_SERVICE_CONFIG } from '../app-config/app-config.service';
 import { AppConfig } from '../app-config/app-config.interface';
 import { Observable } from 'rxjs';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'budget-tracker',
@@ -59,6 +60,9 @@ export class TrackerComponent
   @ViewChildren(HeaderComponent)
   headerChildrenComponent!: QueryList<HeaderComponent>;
 
+
+  totalBytes = 0;
+
   constructor(
     @SkipSelf() private readonly trackerService: TrackerService,
     @Inject(APP_SERVICE_CONFIG) private config: AppConfig // Inject value
@@ -66,8 +70,31 @@ export class TrackerComponent
 
   async ngOnInit(): Promise<void> {
     // use to fetch data from the API
+
     // console.log(this.config.apiUrl);
     // this.accounts = this.trackerService.getAccounts();
+
+    this.trackerService.getPhotos().subscribe((event) => {
+      switch (event.type) {
+        case HttpEventType.Sent: {
+          console.log('Reqeust has been made');
+          break;
+        }
+        case HttpEventType.ResponseHeader: {
+          console.log('Request success');
+          break;
+        }
+        case HttpEventType.DownloadProgress: {
+          this.totalBytes += event.loaded;
+          break;
+        }
+        case HttpEventType.Response: {
+          console.log('Request completed!');
+        }
+      }
+    })
+
+
     this.trackerService.getAccounts().subscribe(async (accounts) => {
       this.accounts = accounts;
       this.trackerService.recalculateTotalSum(accounts);
@@ -83,7 +110,7 @@ export class TrackerComponent
 
   ngDoCheck(): void {
     // Listen to any changes in entire application
-    console.log('do check triggered');
+    // console.log('do check triggered');
   }
 
   ngAfterViewInit(): void {
