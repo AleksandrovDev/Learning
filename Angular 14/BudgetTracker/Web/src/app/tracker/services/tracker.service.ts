@@ -39,8 +39,10 @@ export class TrackerService {
   //   });
   // }
 
-  async getCurrentBudget() {
+  getCurrentBudget() {
     // this.recalculateTotalSum();
+
+    return this.currentBudget;
 
     return new Promise<number>((res) =>
       setTimeout(() => {

@@ -5,7 +5,7 @@
 <!-- {{ accounts$ | async | json }} -->
 
 <h2 [ngStyle]="{ color: currentBudget > 0 ? 'green' : 'red' }">
-  Current budget: {{ currentBudget | currency }}
+  Current budget: {{ currentBudget$ | async }}
 </h2>
 
 <button type="button" class="btn btn-primary" tooltip="das" (click)="toggle()">

@@ -16,7 +16,7 @@ import { HeaderComponent } from '../header/header.component';
 import { TrackerService } from './services/tracker.service';
 import { APP_SERVICE_CONFIG } from '../app-config/app-config.service';
 import { AppConfig } from '../app-config/app-config.interface';
-import { Observable, Subject, Subscription, catchError, of, tap } from 'rxjs';
+import { Observable, Subject, Subscription, catchError, map, of, tap } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 
 @Component({
@@ -34,6 +34,7 @@ export class TrackerComponent
   // accounts: Account[] = [];
   title = 'Current assets:';
   currentBudget = 0;
+  currentBudget$ = new Subject();
 
   // Subject is a base class for all type of streams you can get
   error$: Subject<string> = new Subject<string>();
@@ -41,12 +42,27 @@ export class TrackerComponent
   getError$ = this.error$.asObservable();
 
   accounts$ = this.trackerService.getAccounts$.pipe(
+    // this.currentBudget$.next()
     catchError((err) => {
       console.log(err);
       this.error$.next(err.message);
       return of([]);
+    }),
+    map((accounts) => {
+      this.trackerService.recalculateTotalSum(accounts);
+      this.currentBudget$.next(this.trackerService.getCurrentBudget());
+      return accounts;
     })
   );
+
+  // currentBudget$ = this.trackerService.getAccounts$.pipe(
+  //   map((accounts) => {
+  //     this.trackerService.recalculateTotalSum(accounts);
+  //     return this.trackerService.getCurrentBudget();
+  //   })
+  // )
+
+  
 
   stream = new Observable<string>((observer) => {
     observer.next('User 1');
@@ -155,6 +171,8 @@ export class TrackerComponent
 
   addAccount() {
     this.trackerService.addAccount().subscribe(async (account) => {
+      // this.trackerService.recalculateTotalSum(this.accounts$)
+      // this.currentBudget$.next('100000')
       // this.accounts$.next()
       // this.accounts = [...this.accounts, account];
       // this.trackerService.recalculateTotalSum(this.accounts);
