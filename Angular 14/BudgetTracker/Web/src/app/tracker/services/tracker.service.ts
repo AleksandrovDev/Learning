@@ -1,4 +1,4 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { shareReplay } from 'rxjs';
 import { Account, CreateAccountDto } from 'src/app/account/account';
@@ -15,8 +15,14 @@ export class TrackerService {
 
   currentBudget: number = 0;
 
+  headers = new HttpHeaders({
+    'token': 'testToken',
+  })
+
   // $ shows that this is a stream
-  getAccounts$ = this.http.get<Account[]>('/api/accounts').pipe(
+  getAccounts$ = this.http.get<Account[]>('/api/accounts', {
+    headers: this.headers,
+  }).pipe(
     shareReplay(1) // allows to cache
   );
 
@@ -27,10 +33,11 @@ export class TrackerService {
   }
 
   // getAccounts() {
-    // this.fetchAccounts();
-    // return this.accounts;
+    
 
-  //   return this.http.get<Account[]>('/api/accounts');
+  //   return this.http.get<Account[]>('/api/accounts', {
+  //     headers,
+  //   });
   // }
 
   // fetchAccounts() {
