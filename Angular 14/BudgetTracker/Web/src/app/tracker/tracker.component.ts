@@ -16,7 +16,7 @@ import { HeaderComponent } from '../header/header.component';
 import { TrackerService } from './services/tracker.service';
 import { APP_SERVICE_CONFIG } from '../app-config/app-config.service';
 import { AppConfig } from '../app-config/app-config.interface';
-import { Observable } from 'rxjs';
+import { Observable, Subject, Subscription, catchError, of, tap } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 
 @Component({
@@ -30,10 +30,23 @@ export class TrackerComponent
   income = '20$';
   role = 'Admin';
   message = '';
-  hideIncome = false;
-  accounts: Account[] = [];
+  hideIncome = true;
+  // accounts: Account[] = [];
   title = 'Current assets:';
   currentBudget = 0;
+
+  // Subject is a base class for all type of streams you can get
+  error$: Subject<string> = new Subject<string>();
+
+  getError$ = this.error$.asObservable();
+
+  accounts$ = this.trackerService.getAccounts$.pipe(
+    catchError((err) => {
+      console.log(err);
+      this.error$.next(err.message);
+      return of([]);
+    })
+  );
 
   stream = new Observable<string>((observer) => {
     observer.next('User 1');
@@ -60,8 +73,9 @@ export class TrackerComponent
   @ViewChildren(HeaderComponent)
   headerChildrenComponent!: QueryList<HeaderComponent>;
 
-
   totalBytes = 0;
+
+  subscriptionObject!: Subscription;
 
   constructor(
     @SkipSelf() private readonly trackerService: TrackerService,
@@ -92,14 +106,15 @@ export class TrackerComponent
           console.log('Request completed!');
         }
       }
-    })
-
-
-    this.trackerService.getAccounts$.subscribe(async (accounts) => {
-      this.accounts = accounts;
-      this.trackerService.recalculateTotalSum(accounts);
-      this.currentBudget = await this.trackerService.getCurrentBudget();
     });
+
+    // this.subscriptionObject = this.trackerService.getAccounts$.subscribe(
+    //   async (accounts) => {
+    //     this.accounts = accounts;
+    //     this.trackerService.recalculateTotalSum(accounts);
+    //     this.currentBudget = await this.trackerService.getCurrentBudget();
+    //   }
+    // );
 
     this.stream.subscribe({
       next: (value) => console.log(value),
@@ -127,7 +142,10 @@ export class TrackerComponent
   // Don't use ngDoCheck and onChanges in the same component
 
   ngOnDestroy(): void {
-    console.log('Destoy tracker called');
+    // console.log('Destoy tracker called');
+    // if (this.subscriptionObject) { // don't forget to destroy subscriptions
+    //   this.subscriptionObject.unsubscribe();
+    // }
   }
 
   showUpdateMessage(account: Account) {
@@ -137,28 +155,28 @@ export class TrackerComponent
 
   addAccount() {
     this.trackerService.addAccount().subscribe(async (account) => {
-      this.accounts = [...this.accounts, account];
-      this.trackerService.recalculateTotalSum(this.accounts);
+      // this.accounts$.next()
+      // this.accounts = [...this.accounts, account];
+      // this.trackerService.recalculateTotalSum(this.accounts);
       this.currentBudget = await this.trackerService.getCurrentBudget();
     });
   }
 
   editAccount() {
     this.trackerService.editAccount().subscribe((updatedAccount) => {
-      this.trackerService.getAccounts().subscribe((accounts) => {
-        this.accounts = accounts;
-      })
+      // this.trackerService.getAccounts().subscribe((accounts) => {
+      //   this.accounts = accounts;
+      // });
     });
   }
 
   deleteAccount() {
     this.trackerService.delete('0').subscribe(() => {
-      this.trackerService.getAccounts().subscribe((accounts) => {
-        this.accounts = accounts;
-      })
+      // this.trackerService.getAccounts().subscribe((accounts) => {
+      //   this.accounts = accounts;
+      // });
     });
   }
-
 }
 
 /* Three ways to bid data from component to view:

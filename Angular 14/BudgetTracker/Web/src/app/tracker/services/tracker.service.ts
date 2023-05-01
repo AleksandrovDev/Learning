@@ -26,18 +26,18 @@ export class TrackerService {
     console.log('Tracker service initialized');
   }
 
-  getAccounts() {
+  // getAccounts() {
     // this.fetchAccounts();
     // return this.accounts;
 
-    return this.http.get<Account[]>('/api/accounts');
-  }
+  //   return this.http.get<Account[]>('/api/accounts');
+  // }
 
-  fetchAccounts() {
-    return this.http.get<Account[]>('/api/accounts').subscribe((accounts) => {
-      this.accounts = accounts;
-    });
-  }
+  // fetchAccounts() {
+  //   return this.http.get<Account[]>('/api/accounts').subscribe((accounts) => {
+  //     this.accounts = accounts;
+  //   });
+  // }
 
   async getCurrentBudget() {
     // this.recalculateTotalSum();

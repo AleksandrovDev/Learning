@@ -1,6 +1,9 @@
 <budget-header></budget-header>
 <budget-header></budget-header>
 <budget-header></budget-header>
+
+<!-- {{ accounts$ | async | json }} -->
+
 <h2 [ngStyle]="{ color: currentBudget > 0 ? 'green' : 'red' }">
   Current budget: {{ currentBudget | currency }}
 </h2>
@@ -8,14 +11,17 @@
 <button type="button" class="btn btn-primary" tooltip="das" (click)="toggle()">
   Toggle
 </button>
-<budget-account-list
-  *ngIf="hideIncome"
-  [accounts]="accounts"
-  [title]="title"
-  (updatedAccount)="showUpdateMessage($event)"
-></budget-account-list>
+{{ accounts$ ? "" : "No accounts" }}
+<div *ngIf="accounts$ | async as accounts">
+  <budget-account-list
+    *ngIf="hideIncome"
+    [accounts]="accounts"
+    [title]="title"
+    (updatedAccount)="showUpdateMessage($event)"
+  ></budget-account-list>
+</div>
 
-{{ accounts.length === 0 ? "No accounts" : "" }}
+<h1>{{ getError$ | async }}</h1>
 
 <div [ngSwitch]="role">
   <div *ngSwitchCase="'User'">Welcome user!</div>
@@ -29,6 +35,8 @@
   <!-- <input type="text"> -->
   <button type="button" (click)="addAccount()">Add new account</button>
   <button type="button" (click)="editAccount()">Edit account</button>
-  <button type="button" (click)="deleteAccount()">Delete account with id 0</button>
+  <button type="button" (click)="deleteAccount()">
+    Delete account with id 0
+  </button>
 </div>
 <h2>Total bytes loaded: {{ totalBytes }}</h2>

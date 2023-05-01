@@ -17,7 +17,7 @@ import { Account } from '../account/account';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountListComponent implements OnChanges, OnDestroy {
-  @Input() accounts: Account[] = [];
+  @Input() accounts: Account[] | null = [];
   @Input() title: string = '';
   @Output() updatedAccount = new EventEmitter<Account>();
 
