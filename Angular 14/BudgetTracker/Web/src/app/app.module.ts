@@ -11,8 +11,12 @@ import { AccountListComponent } from './account-list/account-list.component';
 import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { MonthViewComponent } from './month-view/month-view.component';
-import { APP_CONFIG, APP_SERVICE_CONFIG } from './app-config/app-config.service';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  APP_CONFIG,
+  APP_SERVICE_CONFIG,
+} from './app-config/app-config.service';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { RequestInterceptor } from './request.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,10 +35,17 @@ import { HttpClientModule } from '@angular/common/http';
     TooltipModule.forRoot(),
     HttpClientModule,
   ],
-  providers: [{
-    provide: APP_SERVICE_CONFIG,
-    useValue: APP_CONFIG,
-  }],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: APP_SERVICE_CONFIG, // injection token
+      useValue: APP_CONFIG,
+    },
+    {
+      provide: HTTP_INTERCEPTORS, // injection token
+      useClass: RequestInterceptor,
+      multi: true,
+    },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

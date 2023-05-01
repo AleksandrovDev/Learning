@@ -20,9 +20,7 @@ export class TrackerService {
   })
 
   // $ shows that this is a stream
-  getAccounts$ = this.http.get<Account[]>('/api/accounts', {
-    headers: this.headers,
-  }).pipe(
+  getAccounts$ = this.http.get<Account[]>('/api/accounts').pipe(
     shareReplay(1) // allows to cache
   );
 
