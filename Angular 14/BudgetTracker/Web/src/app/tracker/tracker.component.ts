@@ -66,16 +66,19 @@ export class TrackerComponent
 
   async ngOnInit(): Promise<void> {
     // use to fetch data from the API
-    console.log(this.config.apiUrl);
-    this.trackerService.getAccounts().subscribe((accounts) => {
+    // console.log(this.config.apiUrl);
+    // this.accounts = this.trackerService.getAccounts();
+    this.trackerService.getAccounts().subscribe(async (accounts) => {
       this.accounts = accounts;
+      this.trackerService.recalculateTotalSum(accounts);
+      this.currentBudget = await this.trackerService.getCurrentBudget();
     });
+
     this.stream.subscribe({
       next: (value) => console.log(value),
       complete: () => console.log('complete'),
       error: (err) => console.log(err),
     });
-    this.currentBudget = await this.trackerService.getCurrentBudget();
   }
 
   ngDoCheck(): void {
@@ -106,11 +109,29 @@ export class TrackerComponent
   }
 
   addAccount() {
-    this.trackerService.addAccount();
-    this.trackerService.getAccounts().subscribe((accounts) => {
-      this.accounts = accounts;
+    this.trackerService.addAccount().subscribe(async (account) => {
+      this.accounts = [...this.accounts, account];
+      this.trackerService.recalculateTotalSum(this.accounts);
+      this.currentBudget = await this.trackerService.getCurrentBudget();
     });
   }
+
+  editAccount() {
+    this.trackerService.editAccount().subscribe((updatedAccount) => {
+      this.trackerService.getAccounts().subscribe((accounts) => {
+        this.accounts = accounts;
+      })
+    });
+  }
+
+  deleteAccount() {
+    this.trackerService.delete('0').subscribe(() => {
+      this.trackerService.getAccounts().subscribe((accounts) => {
+        this.accounts = accounts;
+      })
+    });
+  }
+
 }
 
 /* Three ways to bid data from component to view:

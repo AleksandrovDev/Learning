@@ -1,4 +1,5 @@
 export interface Account {
+  id: string;
   currency: string;
   currentSum: number;
   exchangeRate: number;
@@ -7,7 +8,9 @@ export interface Account {
   isToggled: boolean;
 }
 
+export interface CreateAccountDto extends Partial<Account> {}
+
 export interface Transaction {
-  time: Date,
-  amount: number,
+  time: Date;
+  amount: number;
 }
