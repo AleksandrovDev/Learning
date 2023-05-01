@@ -95,7 +95,7 @@ export class TrackerComponent
     })
 
 
-    this.trackerService.getAccounts().subscribe(async (accounts) => {
+    this.trackerService.getAccounts$.subscribe(async (accounts) => {
       this.accounts = accounts;
       this.trackerService.recalculateTotalSum(accounts);
       this.currentBudget = await this.trackerService.getCurrentBudget();

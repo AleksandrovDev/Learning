@@ -1,5 +1,6 @@
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { shareReplay } from 'rxjs';
 import { Account, CreateAccountDto } from 'src/app/account/account';
 import { AppConfig } from 'src/app/app-config/app-config.interface';
 import { APP_SERVICE_CONFIG } from 'src/app/app-config/app-config.service';
@@ -13,6 +14,11 @@ export class TrackerService {
   accounts: Account[] = [];
 
   currentBudget: number = 0;
+
+  // $ shows that this is a stream
+  getAccounts$ = this.http.get<Account[]>('/api/accounts').pipe(
+    shareReplay(1) // allows to cache
+  );
 
   constructor(
     private readonly http: HttpClient // @Inject(APP_SERVICE_CONFIG) private config: AppConfig
