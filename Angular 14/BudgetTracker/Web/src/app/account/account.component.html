@@ -3,6 +3,7 @@
   <button (click)="toggleHistory(account)">
     {{ account.isToggled ? 'Hide history' : 'Display history' }}
   </button>
+  <button type="button" [routerLink]="['/accounts', account.id]">Details</button>
   <div>
     <input #amount type="text">
     <button type="button" (click)="addTransaction(amount.value); amount.value=''">Add transaction</button>
