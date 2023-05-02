@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'budget-login',
@@ -9,9 +10,12 @@ export class LoginComponent {
   email = '';
   password = '';
 
+  constructor(private readonly router: Router) {}
+
   login() {
     if (this.email === 'admin@gmail.com' && this.password === 'admin') {
-      alert('Login successfull');
+      this.router.navigate(['/accounts', 'add']);
+      // this.router.navigateByUrl('/accounts/add');
     }
   }
 }
