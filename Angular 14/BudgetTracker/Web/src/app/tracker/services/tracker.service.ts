@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { shareReplay } from 'rxjs';
-import { Account, CreateAccountDto } from 'src/app/account/account';
+import { Account, CreateAccountDto } from 'src/app/account-list/account/account';
 import { AppConfig } from 'src/app/app-config/app-config.interface';
 import { APP_SERVICE_CONFIG } from 'src/app/app-config/app-config.service';
 

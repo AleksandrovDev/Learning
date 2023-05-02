@@ -11,7 +11,7 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { Account } from '../account/account';
+import { Account } from '../account-list/account/account';
 import { HeaderComponent } from '../header/header.component';
 import { TrackerService } from './services/tracker.service';
 import { APP_SERVICE_CONFIG } from '../app-config/app-config.service';

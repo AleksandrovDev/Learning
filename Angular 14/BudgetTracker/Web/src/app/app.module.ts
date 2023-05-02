@@ -1,13 +1,10 @@
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TrackerComponent } from './tracker/tracker.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { AccountComponent } from './account/account.component';
-import { AccountListComponent } from './account-list/account-list.component';
 import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { MonthViewComponent } from './month-view/month-view.component';
@@ -26,12 +23,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { AccountInfoComponent } from './account/account-info/account-info.component';
-import { AccountAddComponent } from './account/account-add/account-add.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HoverDirective } from './hover.directive';
 import { EmailValidatorDirective } from './email-validator/email-validator.directive';
+import { AccountListModule } from './account-list/account-list.module';
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -41,15 +37,11 @@ function initFactory(initService: InitService) {
   declarations: [
     AppComponent,
     TrackerComponent,
-    AccountComponent,
-    AccountListComponent,
     HeaderComponent,
     ContainerComponent,
     MonthViewComponent,
     AppNavComponent,
     NotFoundComponent,
-    AccountInfoComponent,
-    AccountAddComponent,
     LoginComponent,
     HoverDirective,
     EmailValidatorDirective,
@@ -67,6 +59,7 @@ function initFactory(initService: InitService) {
     MatIconModule,
     MatListModule,
     FormsModule,
+    AccountListModule,
   ],
   providers: [
     {

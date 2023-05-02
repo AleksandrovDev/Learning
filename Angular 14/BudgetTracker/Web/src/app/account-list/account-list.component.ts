@@ -8,7 +8,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { Account } from '../account/account';
+import { Account } from './account/account';
 
 @Component({
   selector: 'budget-account-list',
