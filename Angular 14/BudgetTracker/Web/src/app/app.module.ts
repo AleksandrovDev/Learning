@@ -29,6 +29,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AccountInfoComponent } from './account/account-info/account-info.component';
 import { AccountAddComponent } from './account/account-add/account-add.component';
 import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -47,6 +48,7 @@ function initFactory(initService: InitService) {
     NotFoundComponent,
     AccountInfoComponent,
     AccountAddComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

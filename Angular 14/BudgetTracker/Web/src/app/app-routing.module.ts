@@ -5,6 +5,7 @@ import { TrackerComponent } from './tracker/tracker.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AccountInfoComponent } from './account/account-info/account-info.component';
 import { AccountAddComponent } from './account/account-add/account-add.component';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
@@ -20,11 +21,16 @@ const routes: Routes = [
     component: AccountAddComponent,
   },
   {
-    path: 'accounts/:id', component: AccountInfoComponent,
+    path: 'accounts/:id',
+    component: AccountInfoComponent,
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
   },
   {
     path: '',
-    redirectTo: 'tracker',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
