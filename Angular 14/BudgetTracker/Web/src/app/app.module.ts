@@ -30,6 +30,7 @@ import { AccountInfoComponent } from './account/account-info/account-info.compon
 import { AccountAddComponent } from './account/account-add/account-add.component';
 import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
+import { HoverDirective } from './hover.directive';
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -49,6 +50,7 @@ function initFactory(initService: InitService) {
     AccountInfoComponent,
     AccountAddComponent,
     LoginComponent,
+    HoverDirective,
   ],
   imports: [
     BrowserModule,

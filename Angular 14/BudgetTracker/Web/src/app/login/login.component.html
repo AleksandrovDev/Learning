@@ -1,6 +1,8 @@
 <form (ngSubmit)="login()">
   <div class="form-group">
     <input
+    budgetHover
+      color="steelblue"
       type="email"
       class="form-control"
       name="name"
@@ -8,8 +10,9 @@
       placeholder="Username"
     />
   </div>
-  <div class="form-group">
+  <div class="form-group" budgetHover>
     <input
+      budgetHover="blue"
       type="text"
       class="form-control"
       name="password"
