@@ -17,14 +17,6 @@ const routes: Routes = [
     component: TrackerComponent,
   },
   {
-    path: 'accounts/add',
-    component: AccountAddComponent,
-  },
-  {
-    path: 'accounts/:id',
-    component: AccountInfoComponent,
-  },
-  {
     path: 'login',
     component: LoginComponent,
   },

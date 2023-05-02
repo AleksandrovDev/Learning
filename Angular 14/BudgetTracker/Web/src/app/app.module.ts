@@ -47,8 +47,10 @@ function initFactory(initService: InitService) {
     EmailValidatorDirective,
   ],
   imports: [
+    // if you have feature module with its own routing,
+    // you should always put it above roo routing module
+    AccountListModule,
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     TooltipModule.forRoot(),
     HttpClientModule,
@@ -59,7 +61,7 @@ function initFactory(initService: InitService) {
     MatIconModule,
     MatListModule,
     FormsModule,
-    AccountListModule,
+    AppRoutingModule,
   ],
   providers: [
     {
