@@ -11,7 +11,7 @@
 <!-- to get the status of formm you have to add #accountForm="ngForm" -->
 <!-- #name is a tempalte variable so you can refer to this HTML element -->
 
-<form #accountForm="ngForm" (ngSubmit)="addAccount()">
+<form #accountForm="ngForm" (ngSubmit)="addAccount(accountForm)">
   <div class="form-group">
     <input
       #currency="ngModel"
@@ -32,7 +32,7 @@
     >
       Min length should be 3 characters
     </div>
-    <div>
+    <div *ngIf="currency.errors?.['required'] && accountForm.dirty">
       {{ currency.errors | json }}
     </div>
   </div>
