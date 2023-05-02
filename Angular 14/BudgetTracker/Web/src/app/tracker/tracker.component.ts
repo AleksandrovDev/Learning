@@ -169,16 +169,16 @@ export class TrackerComponent
     setTimeout(() => (this.message = ''), 2000);
   }
 
-  addAccount() {
-    this.trackerService.addAccount().subscribe(async (account) => {
+  // addAccount() {
+  //   this.trackerService.addAccount().subscribe(async (account) => {
       // this.trackerService.recalculateTotalSum(this.accounts$)
       // this.currentBudget$.next('100000')
       // this.accounts$.next()
       // this.accounts = [...this.accounts, account];
       // this.trackerService.recalculateTotalSum(this.accounts);
-      this.currentBudget = await this.trackerService.getCurrentBudget();
-    });
-  }
+  //     this.currentBudget = await this.trackerService.getCurrentBudget();
+  //   });
+  // }
 
   editAccount() {
     this.trackerService.editAccount().subscribe((updatedAccount) => {

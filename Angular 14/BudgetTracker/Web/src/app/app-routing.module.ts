@@ -4,6 +4,7 @@ import { MonthViewComponent } from './month-view/month-view.component';
 import { TrackerComponent } from './tracker/tracker.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { AccountInfoComponent } from './account/account-info/account-info.component';
+import { AccountAddComponent } from './account/account-add/account-add.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
   {
     path: 'tracker',
     component: TrackerComponent,
+  },
+  {
+    path: 'accounts/add',
+    component: AccountAddComponent,
   },
   {
     path: 'accounts/:id', component: AccountInfoComponent,

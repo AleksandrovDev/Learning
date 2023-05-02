@@ -56,20 +56,20 @@ export class TrackerService {
     );
   }
 
-  addAccount() {
-    const account: CreateAccountDto = {
-      currency: 'USD',
-      currentSum: 3,
-      exchangeRate: 1,
-      incomes: [
-        {
-          time: new Date(),
-          amount: 100,
-        },
-      ],
-      expenses: [],
-      isToggled: false,
-    };
+  addAccount(account: CreateAccountDto) {
+    // const account: CreateAccountDto = {
+    //   currency: 'USD',
+    //   currentSum: 3,
+    //   exchangeRate: 1,
+    //   incomes: [
+    //     {
+    //       time: new Date(),
+    //       amount: 100,
+    //     },
+    //   ],
+    //   expenses: [],
+    //   isToggled: false,
+    // };
 
     return this.http.post<Account>('/api/accounts', account);
   }
