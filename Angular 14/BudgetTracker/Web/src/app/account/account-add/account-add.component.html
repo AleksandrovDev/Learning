@@ -1,21 +1,46 @@
-{{ account | json }}
+<p>Account form valid: {{ accountForm.valid | json }}</p>
+<p>Account form pristine: {{ accountForm.pristine }}</p>
+<p>Account form dirty: {{ accountForm.dirty }}</p>
+<p>Account form invalid: {{ accountForm.invalid }}</p>
+<p>Account form value: {{ accountForm.value | json }}</p>
 
-<div class="alert alert-success">
+<div *ngIf="successMessage !== ''" class="alert alert-success">
   {{ successMessage }}
 </div>
 
-<form (ngSubmit)="addAccount()">
+<!-- to get the status of formm you have to add #accountForm="ngForm" -->
+<!-- #name is a tempalte variable so you can refer to this HTML element -->
+
+<form #accountForm="ngForm" (ngSubmit)="addAccount()">
   <div class="form-group">
     <input
+      #currency="ngModel"
+      minlength="3"
+      maxlength="3"
+      required
       type="text"
       class="form-control"
+      pattern="[A-Z]+"
       name="currency"
       placeholder="Currency"
       [(ngModel)]="account.currency"
     />
+    <div
+      class="alert alert-danger"
+      style="color: tomato"
+      *ngIf="currency.errors?.['minlength']"
+    >
+      Min length should be 3 characters
+    </div>
+    <div>
+      {{ currency.errors | json }}
+    </div>
   </div>
   <div class="form-group">
     <input
+      required
+      min="0"
+      max="1000"
       type="number"
       class="form-control"
       name="exchangeRate"
@@ -23,5 +48,11 @@
       [(ngModel)]="account.exchangeRate"
     />
   </div>
-  <button class="btn btn-primary" type="submit">Create account</button>
+  <button
+    [disabled]="accountForm.invalid"
+    class="btn btn-primary"
+    type="submit"
+  >
+    Create account
+  </button>
 </form>
