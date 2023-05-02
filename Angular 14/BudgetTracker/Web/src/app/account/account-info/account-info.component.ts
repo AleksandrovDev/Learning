@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable, map } from 'rxjs';
 
 @Component({
@@ -9,7 +9,8 @@ import { Observable, map } from 'rxjs';
 })
 export class AccountInfoComponent implements OnInit {
   id!: string;
-  id$!: Observable<number>;
+  id$!: Observable<string>;
+  paramsMap$: Observable<ParamMap> =this.activatedRoute.paramMap;
   idFromSnapshot!: string;
 
   constructor(private readonly activatedRoute: ActivatedRoute) {}
@@ -26,6 +27,7 @@ export class AccountInfoComponent implements OnInit {
       map((params) => params['id'])
     )
 
+    // ParamMap is better to use
 
 
     // snapshot will never update the value in the same view
