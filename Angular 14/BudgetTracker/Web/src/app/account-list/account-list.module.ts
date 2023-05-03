@@ -7,6 +7,8 @@ import { AccountListComponent } from './account-list.component';
 import { AccountAddComponent } from './account-add/account-add.component';
 import { AccountInfoComponent } from './account-info/account-info.component';
 import { FormsModule } from '@angular/forms';
+import { TrackerComponent } from './tracker/tracker.component';
+import { HeaderModule } from '../header/header.module';
 
 @NgModule({
   declarations: [
@@ -14,8 +16,9 @@ import { FormsModule } from '@angular/forms';
     AccountListComponent,
     AccountInfoComponent,
     AccountAddComponent,
+    TrackerComponent,
   ],
-  imports: [CommonModule, AccountListRoutingModule, FormsModule],
+  imports: [CommonModule, AccountListRoutingModule, FormsModule, HeaderModule],
   exports: [
     // do not forget to export components which you want to access outside of your module
     AccountListComponent,

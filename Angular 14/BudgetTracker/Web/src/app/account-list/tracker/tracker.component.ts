@@ -11,11 +11,11 @@ import {
   ViewChild,
   ViewChildren,
 } from '@angular/core';
-import { Account } from '../account-list/account/account';
-import { HeaderComponent } from '../header/header.component';
+import { Account } from '../account/account';
+import { HeaderComponent } from '../../header/header.component';
 import { TrackerService } from './services/tracker.service';
-import { APP_SERVICE_CONFIG } from '../app-config/app-config.service';
-import { AppConfig } from '../app-config/app-config.interface';
+import { APP_SERVICE_CONFIG } from '../../app-config/app-config.service';
+import { AppConfig } from '../../app-config/app-config.interface';
 import { Observable, Subject, Subscription, catchError, map, of, tap } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 

@@ -2,10 +2,8 @@ import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TrackerComponent } from './tracker/tracker.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { HeaderComponent } from './header/header.component';
 import { ContainerComponent } from './container/container.component';
 import { MonthViewComponent } from './month-view/month-view.component';
 import {
@@ -28,6 +26,7 @@ import { LoginComponent } from './login/login.component';
 import { HoverDirective } from './hover.directive';
 import { EmailValidatorDirective } from './email-validator/email-validator.directive';
 import { AccountListModule } from './account-list/account-list.module';
+import { HeaderModule } from './header/header.module';
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -36,8 +35,6 @@ function initFactory(initService: InitService) {
 @NgModule({
   declarations: [
     AppComponent,
-    TrackerComponent,
-    HeaderComponent,
     ContainerComponent,
     MonthViewComponent,
     AppNavComponent,
@@ -50,6 +47,7 @@ function initFactory(initService: InitService) {
     // if you have feature module with its own routing,
     // you should always put it above roo routing module
     AccountListModule,
+    HeaderModule,
     BrowserModule,
     BrowserAnimationsModule,
     TooltipModule.forRoot(),

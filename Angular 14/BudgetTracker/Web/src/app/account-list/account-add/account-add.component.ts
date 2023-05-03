@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CreateAccountDto } from '../account/account';
-import { TrackerService } from 'src/app/tracker/services/tracker.service';
+import { TrackerService } from 'src/app/account-list/tracker/services/tracker.service';
 import { NgForm } from '@angular/forms';
 
 @Component({

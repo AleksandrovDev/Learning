@@ -1,6 +1,6 @@
 import { AfterContentInit, Component, ContentChild, Host } from '@angular/core';
 import { MonthViewComponent } from '../month-view/month-view.component';
-import { TrackerService } from '../tracker/services/tracker.service';
+import { TrackerService } from '../account-list/tracker/services/tracker.service';
 
 @Component({
   selector: 'budget-container',

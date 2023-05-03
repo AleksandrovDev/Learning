@@ -8,7 +8,7 @@ import {
   ViewChild,
   ViewContainerRef,
 } from '@angular/core';
-import { TrackerComponent } from './tracker/tracker.component';
+import { TrackerComponent } from './account-list/tracker/tracker.component';
 import { LoggerService } from './logger.service';
 import { localStorageToken } from './local-storage.token';
 import { InitService } from './init.service';

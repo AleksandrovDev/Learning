@@ -1,5 +1,5 @@
 import { Component, Self } from '@angular/core';
-import { TrackerService } from '../tracker/services/tracker.service';
+import { TrackerService } from '../account-list/tracker/services/tracker.service';
 
 @Component({
   selector: 'budget-month-view',
