@@ -10,14 +10,15 @@ const routes: Routes = [
     component: TrackerComponent,
     children: [
       {
+        path: 'add',
+        component: AccountAddComponent,
+      },
+      {
         path: ':id',
         component: AccountInfoComponent,
       },
+      
     ],
-  },
-  {
-    path: 'accounts/add',
-    component: AccountAddComponent,
   },
 ];
 
