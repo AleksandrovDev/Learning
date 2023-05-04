@@ -13,6 +13,8 @@ import { LoggerService } from './logger.service';
 import { localStorageToken } from './local-storage.token';
 import { InitService } from './init.service';
 import { ConfigService } from './services/config.service';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'budget-root',
@@ -39,12 +41,29 @@ export class AppComponent implements AfterViewInit, OnInit {
     @Inject(localStorageToken) private readonly localStorage: Storage,
     private readonly initService: InitService,
     private readonly configService: ConfigService,
+    private readonly router: Router,
     @Optional() private readonly loggerService?: LoggerService
   ) {
     console.log(this.initService.config);
   }
 
   ngOnInit(): void {
+    // this.router.events.subscribe((event) => {
+    //   console.log(event);
+    // });
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationStart))
+      .subscribe((event) => {
+        console.log('Navigation Started');
+      });
+
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event) => {
+        console.log('Navigation completed');
+      });
+
     this.loggerService?.log('AppComponent.ngOnInit()');
     this.name.nativeElement.innerText = 'Budget tracker';
 
