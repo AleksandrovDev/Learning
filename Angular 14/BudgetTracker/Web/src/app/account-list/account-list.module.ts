@@ -9,6 +9,7 @@ import { AccountInfoComponent } from './account-info/account-info.component';
 import { FormsModule } from '@angular/forms';
 import { TrackerComponent } from './tracker/tracker.component';
 import { HeaderModule } from '../header/header.module';
+import { RouteConfigToken } from '../services/routeConfig.service';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,14 @@ import { HeaderModule } from '../header/header.module';
   exports: [
     // do not forget to export components which you want to access outside of your module
     AccountListComponent,
+  ],
+  providers: [
+    {
+      provide: RouteConfigToken,
+      useValue: {
+        title: 'Account',
+      },
+    },
   ],
 })
 export class AccountListModule {}

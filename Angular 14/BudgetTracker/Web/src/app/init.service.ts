@@ -3,7 +3,9 @@ import { Injectable } from '@angular/core';
 import { tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root', 
+  // root means that you can use this service anywhere inside your application
+  // and this is singleton
 })
 export class InitService {
   constructor(private readonly http: HttpClient) {}

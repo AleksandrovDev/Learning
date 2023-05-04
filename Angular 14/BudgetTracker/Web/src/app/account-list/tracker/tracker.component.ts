@@ -18,6 +18,7 @@ import { APP_SERVICE_CONFIG } from '../../app-config/app-config.service';
 import { AppConfig } from '../../app-config/app-config.interface';
 import { Observable, Subject, Subscription, catchError, map, of, tap } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
+import { ConfigService } from 'src/app/services/config.service';
 
 @Component({
   selector: 'budget-tracker',
@@ -95,8 +96,9 @@ export class TrackerComponent
 
   constructor(
     @SkipSelf() private readonly trackerService: TrackerService,
-    @Inject(APP_SERVICE_CONFIG) private config: AppConfig // Inject value
-  ) {} // use only for inject services, other logic place in ngOnInit
+    @Inject(APP_SERVICE_CONFIG) private config: AppConfig, // Inject value
+    private readonly configService: ConfigService,
+    ) {} // use only for inject services, other logic place in ngOnInit
 
   async ngOnInit(): Promise<void> {
     // use to fetch data from the API

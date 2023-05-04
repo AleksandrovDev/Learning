@@ -12,6 +12,7 @@ import { TrackerComponent } from './account-list/tracker/tracker.component';
 import { LoggerService } from './logger.service';
 import { localStorageToken } from './local-storage.token';
 import { InitService } from './init.service';
+import { ConfigService } from './services/config.service';
 
 @Component({
   selector: 'budget-root',
@@ -37,6 +38,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   constructor(
     @Inject(localStorageToken) private readonly localStorage: Storage,
     private readonly initService: InitService,
+    private readonly configService: ConfigService,
     @Optional() private readonly loggerService?: LoggerService
   ) {
     console.log(this.initService.config);
