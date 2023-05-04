@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'budget-login',
@@ -10,12 +11,16 @@ export class LoginComponent {
   email = '';
   password = '';
 
-  constructor(private readonly router: Router) {}
+  constructor(
+    private readonly router: Router,
+    private readonly loginService: LoginService
+  ) {}
 
   login() {
-    if (this.email === 'admin@gmail.com' && this.password === 'admin') {
-      this.router.navigate(['/accounts', 'add']);
-      // this.router.navigateByUrl('/accounts/add');
+    const isLoggedIn = this.loginService.login(this.email, this.password);
+
+    if (isLoggedIn) {
+      this.router.navigate(['/accounts']);
     }
   }
 }
