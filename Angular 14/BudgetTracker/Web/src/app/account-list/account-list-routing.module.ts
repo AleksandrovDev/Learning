@@ -6,7 +6,8 @@ import { TrackerComponent } from './tracker/tracker.component';
 
 const routes: Routes = [
   {
-    path: 'accounts',
+    // don't forget to clear path if you make this module lazy
+    path: '',
     component: TrackerComponent,
     children: [
       {

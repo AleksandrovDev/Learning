@@ -4,8 +4,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { ContainerComponent } from './container/container.component';
-import { MonthViewComponent } from './month-view/month-view.component';
+// import { ContainerComponent } from './container/container.component';
+// import { MonthViewComponent } from './month-view/month-view.component';
 import {
   APP_CONFIG,
   APP_SERVICE_CONFIG,
@@ -25,7 +25,7 @@ import { FormsModule } from '@angular/forms';
 import { LoginComponent } from './login/login.component';
 import { HoverDirective } from './hover.directive';
 import { EmailValidatorDirective } from './email-validator/email-validator.directive';
-import { AccountListModule } from './account-list/account-list.module';
+// import { AccountListModule } from './account-list/account-list.module';
 import { HeaderModule } from './header/header.module';
 
 function initFactory(initService: InitService) {
@@ -35,8 +35,8 @@ function initFactory(initService: InitService) {
 @NgModule({
   declarations: [
     AppComponent,
-    ContainerComponent,
-    MonthViewComponent,
+    // ContainerComponent,
+    // MonthViewComponent,
     AppNavComponent,
     NotFoundComponent,
     LoginComponent,
@@ -46,7 +46,7 @@ function initFactory(initService: InitService) {
   imports: [
     // if you have feature module with its own routing,
     // you should always put it above roo routing module
-    AccountListModule,
+    // AccountListModule,
     HeaderModule,
     BrowserModule,
     BrowserAnimationsModule,

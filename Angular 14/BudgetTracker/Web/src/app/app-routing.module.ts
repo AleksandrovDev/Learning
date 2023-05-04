@@ -1,20 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MonthViewComponent } from './month-view/month-view.component';
-import { TrackerComponent } from './account-list/tracker/tracker.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { AccountInfoComponent } from './account-list/account-info/account-info.component';
-import { AccountAddComponent } from './account-list/account-add/account-add.component';
 import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
     path: 'month-view',
-    component: MonthViewComponent,
+    loadChildren: () =>
+      import('./month-view/month-view.module').then((m) => m.MonthViewModule),
   },
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'accounts',
+    loadChildren: () =>
+      import('./account-list/account-list.module').then(
+        (m) => m.AccountListModule
+      ),
   },
   {
     path: '',

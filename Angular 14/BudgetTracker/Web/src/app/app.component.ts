@@ -50,7 +50,7 @@ export class AppComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    const componentRef = this.vcr.createComponent(TrackerComponent); // dynamic template loading
-    componentRef.instance.role = 'User';
+    // const componentRef = this.vcr.createComponent(TrackerComponent); // dynamic template loading
+    // componentRef.instance.role = 'User';
   }
 }
