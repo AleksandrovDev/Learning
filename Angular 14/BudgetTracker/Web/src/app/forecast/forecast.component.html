@@ -63,5 +63,48 @@
       </mat-expansion-panel>
     </mat-accordion>
   </div>
+  <div>
+    <div>
+      <button
+        type="button"
+        mat-raised-button
+        color="primary"
+        (click)="addTask()"
+      >
+        Add task
+      </button>
+    </div>
+    <div formArrayName="tasks">
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title> Tasks </mat-panel-title>
+            <mat-panel-description> Fill the tasks </mat-panel-description>
+          </mat-expansion-panel-header>
+       <div *ngFor="let task of tasks.controls; let i = index">
+        <div [formGroupName]="i">
+          Guest {{ i + 1}}
+          <mat-form-field class="example-full-width">
+            <input
+              type="text"
+              matInput
+              formControlName="definition"
+              placeholder="Definition"
+            />
+          </mat-form-field> 
+          <mat-form-field class="example-full-width">
+            <input
+              type="text"
+              matInput
+              formControlName="priority"
+              placeholder="Priority"
+            />
+          </mat-form-field>
+        </div>
+       </div>
+      </mat-expansion-panel>
+      </mat-accordion> 
+    </div>
+  </div>
   <div><button mat-raised-button color="primary">Add forecast</button></div>
 </form>

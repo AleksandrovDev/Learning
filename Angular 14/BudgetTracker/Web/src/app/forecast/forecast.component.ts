@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 export class Forecast {
   accountId!: string;
@@ -14,6 +14,10 @@ export class Forecast {
 export class ForecastComponent implements OnInit {
   forecastForm!: FormGroup;
 
+  get tasks() {
+    return this.forecastForm.get('tasks') as FormArray;
+  }
+
   constructor(private readonly formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
@@ -27,11 +31,26 @@ export class ForecastComponent implements OnInit {
       nestedForm: this.formBuilder.group({
         nestedField: [''],
       }),
+      tasks: this.formBuilder.array([
+        this.formBuilder.group({
+          definition: [''],
+          priority: [''],
+        }),
+      ]),
     });
   }
 
   addForecast() {
     console.log(this.forecastForm.value);
     console.log(this.forecastForm.getRawValue()); // allows to see disabled value too
+  }
+
+  addTask() {
+    this.tasks.push(
+      this.formBuilder.group({
+        definition: [''],
+        priority: [''],
+      })
+    );
   }
 }
