@@ -31,7 +31,7 @@ const routes: Routes = [
   },
   {
     path: 'forecast',
-    canActivate: [LoginGuard],
+    // canActivate: [LoginGuard],
     loadChildren: () =>
       import('./forecast/forecast.module').then((m) => m.ForecastModule),
   },

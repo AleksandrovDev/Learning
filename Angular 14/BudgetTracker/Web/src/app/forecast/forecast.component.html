@@ -1,1 +1,43 @@
 <p>forecast works!</p>
+{{ forecastForm.value | json }}
+{{ forecastForm.pristine }}
+{{ forecastForm.dirty }}
+
+<form class="example-form" [formGroup]="forecastForm">
+  <mat-form-field class="example-full-width">
+    <mat-label>Forecast Id</mat-label>
+    <input
+      type="text"
+      matInput
+      formControlName="forecastId"
+      placeholder="Forecast Id"
+    />
+    <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+    <!-- <mat-error
+      *ngIf="
+        emailFormControl.hasError('email') &&
+        !emailFormControl.hasError('required')
+      "
+    >
+      Please enter a valid email address
+    </mat-error>
+    <mat-error *ngIf="emailFormControl.hasError('required')">
+      Email is <strong>required</strong>
+    </mat-error> -->
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input
+      type="number"
+      matInput
+      formControlName="forecastedSum"
+      placeholder="Forecasted Sum"
+    />
+  </mat-form-field>
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Target date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="targetDate">
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</form>
