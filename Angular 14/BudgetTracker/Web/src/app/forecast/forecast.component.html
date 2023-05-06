@@ -3,7 +3,11 @@
 {{ forecastForm.pristine }}
 {{ forecastForm.dirty }}
 
-<form class="example-form" [formGroup]="forecastForm">
+<form
+  class="example-form"
+  [formGroup]="forecastForm"
+  (ngSubmit)="addForecast()"
+>
   <mat-form-field class="example-full-width">
     <mat-label>Forecast Id</mat-label>
     <input
@@ -35,9 +39,29 @@
   </mat-form-field>
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Target date</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="targetDate">
+    <input matInput [matDatepicker]="picker" formControlName="targetDate" />
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
+  <!-- You can have only one formGroup on the page to refer to the nested forms create div and use formGroupName -->
+  <div formGroupName="nestedForm">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Nested Form </mat-panel-title>
+          <mat-panel-description> Fill the nested form </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-form-field class="example-full-width">
+          <input
+            type="text"
+            matInput
+            formControlName="nestedField"
+            placeholder="Nested field"
+          />
+        </mat-form-field>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div><button mat-raised-button color="primary">Add forecast</button></div>
 </form>

@@ -18,9 +18,20 @@ export class ForecastComponent implements OnInit {
 
   ngOnInit(): void {
     this.forecastForm = this.formBuilder.group({
-      forecastId: new FormControl(''), // or you can use just ['']
+      forecastId: new FormControl({
+        value: 2,
+        disabled: true,
+      }), // or you can use just ['']
       forecastedSum: [''],
       targetDate: [''],
+      nestedForm: this.formBuilder.group({
+        nestedField: [''],
+      }),
     });
+  }
+
+  addForecast() {
+    console.log(this.forecastForm.value);
+    console.log(this.forecastForm.getRawValue()); // allows to see disabled value too
   }
 }
