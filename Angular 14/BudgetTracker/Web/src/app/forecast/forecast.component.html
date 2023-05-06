@@ -28,14 +28,17 @@
   [formGroup]="forecastForm"
   (ngSubmit)="addForecast()"
 >
-<mat-form-field *ngIf="forecastForm.get('currentSum')" class="example-full-width">
-  <input
-    type="number"
-    matInput
-    formControlName="currentSum"
-    placeholder="Current Sum"
-  />
-</mat-form-field>
+  <mat-form-field
+    *ngIf="forecastForm.get('currentSum')"
+    class="example-full-width"
+  >
+    <input
+      type="number"
+      matInput
+      formControlName="currentSum"
+      placeholder="Current Sum"
+    />
+  </mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Forecast Id</mat-label>
     <input
@@ -144,5 +147,10 @@
       </mat-accordion>
     </div>
   </div>
-  <div><button mat-raised-button color="primary">Add forecast</button></div>
+  <div>
+    <mat-checkbox class="example-margin" formControlName="termsAndConditions"
+      >Accept terms and conditions</mat-checkbox
+    >
+  </div>
+  <div><button [disabled]="forecastForm.invalid" mat-raised-button color="primary">Add forecast</button></div>
 </form>

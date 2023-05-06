@@ -10,6 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [ForecastComponent],
@@ -23,6 +24,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatNativeDateModule,
     MatButtonModule,
     MatExpansionModule,
+    MatCheckboxModule,
   ],
 })
 export class ForecastModule {}

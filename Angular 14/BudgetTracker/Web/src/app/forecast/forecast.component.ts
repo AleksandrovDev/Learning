@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 export class Forecast {
   accountId!: string;
@@ -22,18 +28,24 @@ export class ForecastComponent implements OnInit {
 
   ngOnInit(): void {
     this.forecastForm = this.formBuilder.group({
-      forecastId: new FormControl({
-        value: 2,
-        disabled: true,
-      }), // or you can use just ['']
-      forecastedSum: [''],
-      targetDate: [''],
+      forecastId: new FormControl(
+        {
+          value: 2,
+          disabled: true,
+        },
+        {
+          validators: [Validators.required],
+        }
+      ), // or you can use just ['']
+      forecastedSum: ['', [Validators.min(1)]],
+      targetDate: ['', [Validators.required]],
       nestedForm: this.formBuilder.group({
         nestedField: [''],
       }),
-      tasks: this.formBuilder.array([
-        this.newTask(),
-      ]),
+      tasks: this.formBuilder.array([this.newTask()]),
+      termsAndConditions: new FormControl(false, {
+        validators: [Validators.requiredTrue],
+      }),
     });
   }
 
@@ -43,9 +55,7 @@ export class ForecastComponent implements OnInit {
   }
 
   addTask() {
-    this.tasks.push(
-      this.newTask()
-    );
+    this.tasks.push(this.newTask());
   }
 
   private newTask(): any {
