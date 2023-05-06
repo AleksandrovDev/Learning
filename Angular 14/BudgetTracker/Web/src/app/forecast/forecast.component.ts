@@ -32,10 +32,7 @@ export class ForecastComponent implements OnInit {
         nestedField: [''],
       }),
       tasks: this.formBuilder.array([
-        this.formBuilder.group({
-          definition: [''],
-          priority: [''],
-        }),
+        this.newTask(),
       ]),
     });
   }
@@ -47,10 +44,28 @@ export class ForecastComponent implements OnInit {
 
   addTask() {
     this.tasks.push(
-      this.formBuilder.group({
-        definition: [''],
-        priority: [''],
-      })
+      this.newTask()
     );
+  }
+
+  private newTask(): any {
+    return this.formBuilder.group({
+      definition: [''],
+      priority: [''],
+    });
+  }
+
+  removeTask(index: number) {
+    this.tasks.removeAt(index);
+  }
+
+  addCurrentSum() {
+    this.forecastForm.addControl('currentSum', new FormControl(''));
+  }
+
+  deleteCurrentSum() {
+    if (this.forecastForm.get('currentSum')) {
+      this.forecastForm.removeControl('currentSum');
+    }
   }
 }

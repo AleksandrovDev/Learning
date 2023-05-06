@@ -3,11 +3,39 @@
 {{ forecastForm.pristine }}
 {{ forecastForm.dirty }}
 
+<div>
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    (click)="addCurrentSum()"
+  >
+    Add current sum
+  </button>
+</div>
+<div>
+  <button
+    type="button"
+    mat-raised-button
+    color="primary"
+    (click)="deleteCurrentSum()"
+  >
+    Delete current sum
+  </button>
+</div>
 <form
   class="example-form"
   [formGroup]="forecastForm"
   (ngSubmit)="addForecast()"
 >
+<mat-form-field *ngIf="forecastForm.get('currentSum')" class="example-full-width">
+  <input
+    type="number"
+    matInput
+    formControlName="currentSum"
+    placeholder="Current Sum"
+  />
+</mat-form-field>
   <mat-form-field class="example-full-width">
     <mat-label>Forecast Id</mat-label>
     <input
@@ -81,29 +109,39 @@
             <mat-panel-title> Tasks </mat-panel-title>
             <mat-panel-description> Fill the tasks </mat-panel-description>
           </mat-expansion-panel-header>
-       <div *ngFor="let task of tasks.controls; let i = index">
-        <div [formGroupName]="i">
-          Guest {{ i + 1}}
-          <mat-form-field class="example-full-width">
-            <input
-              type="text"
-              matInput
-              formControlName="definition"
-              placeholder="Definition"
-            />
-          </mat-form-field> 
-          <mat-form-field class="example-full-width">
-            <input
-              type="text"
-              matInput
-              formControlName="priority"
-              placeholder="Priority"
-            />
-          </mat-form-field>
-        </div>
-       </div>
-      </mat-expansion-panel>
-      </mat-accordion> 
+          <div *ngFor="let task of tasks.controls; let i = index">
+            <div [formGroupName]="i">
+              Guest {{ i + 1 }}
+              <mat-form-field class="example-full-width">
+                <input
+                  type="text"
+                  matInput
+                  formControlName="definition"
+                  placeholder="Definition"
+                />
+              </mat-form-field>
+              <mat-form-field class="example-full-width">
+                <input
+                  type="text"
+                  matInput
+                  formControlName="priority"
+                  placeholder="Priority"
+                />
+              </mat-form-field>
+            </div>
+            <div>
+              <button
+                type="button"
+                mat-raised-button
+                color="primary"
+                (click)="removeTask(i)"
+              >
+                Remove task
+              </button>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
     </div>
   </div>
   <div><button mat-raised-button color="primary">Add forecast</button></div>
