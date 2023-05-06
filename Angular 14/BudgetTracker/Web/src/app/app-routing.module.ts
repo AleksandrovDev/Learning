@@ -18,6 +18,7 @@ const routes: Routes = [
   {
     path: 'accounts',
     canActivate: [LoginGuard],
+    canLoad: [LoginGuard], // use only for lazy loading, restrict loading module
     loadChildren: () =>
       import('./account-list/account-list.module').then(
         (m) => m.AccountListModule
