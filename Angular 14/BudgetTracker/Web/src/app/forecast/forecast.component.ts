@@ -49,6 +49,21 @@ export class ForecastComponent implements OnInit {
         validators: [Validators.requiredTrue],
       }),
     });
+
+    this.getForecastData();
+  }
+
+  getForecastData() {
+    this.forecastForm.patchValue({
+      forecastId: '3',
+      forecastedSum: 100,
+      targetDate: '',
+      nestedForm: {
+        nestedField: ''
+      },
+      tasks: [],
+      termsAndConditions: false,
+    })
   }
 
   addForecast() {
