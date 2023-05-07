@@ -48,6 +48,7 @@
       name="exchangeRate"
       placeholder="Echange Rate"
       [(ngModel)]="account.exchangeRate"
+      [ngModelOptions]="{ updateOn: 'blur' }"
     />
   </div>
   <button
