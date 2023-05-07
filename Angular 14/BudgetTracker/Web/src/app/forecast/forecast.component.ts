@@ -37,10 +37,12 @@ export class ForecastComponent implements OnInit {
           validators: [Validators.required],
         }
       ), // or you can use just ['']
-      forecastedSum: ['', [Validators.min(1)]],
+      forecastedSum: ['', [Validators.min(1), Validators.required]],
       targetDate: ['', [Validators.required]],
       nestedForm: this.formBuilder.group({
-        nestedField: [''],
+        nestedField: new FormControl('', {
+          validators: [Validators.required],
+        }),
       }),
       tasks: this.formBuilder.array([this.newTask()]),
       termsAndConditions: new FormControl(false, {
@@ -52,6 +54,9 @@ export class ForecastComponent implements OnInit {
   addForecast() {
     console.log(this.forecastForm.value);
     console.log(this.forecastForm.getRawValue()); // allows to see disabled value too
+    this.forecastForm.reset({
+      forecastId: 'reset', // Pass default values here
+    });
   }
 
   addTask() {
@@ -60,7 +65,9 @@ export class ForecastComponent implements OnInit {
 
   private newTask(): any {
     return this.formBuilder.group({
-      definition: [''],
+      definition: ['', {
+        validators: [Validators.required]
+      }],
       priority: [''],
     });
   }
