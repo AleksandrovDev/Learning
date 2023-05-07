@@ -37,7 +37,13 @@ export class ForecastComponent implements OnInit {
           validators: [Validators.required],
         }
       ), // or you can use just ['']
-      forecastedSum: ['', [Validators.min(1), Validators.required]],
+      forecastedSum: [
+        '',
+        {
+          updateOn: 'blur', // to customize when the valueChanges will be triggered
+          validators: [Validators.min(1), Validators.required],
+        },
+      ],
       targetDate: ['', [Validators.required]],
       nestedForm: this.formBuilder.group({
         nestedField: new FormControl('', {
@@ -48,9 +54,14 @@ export class ForecastComponent implements OnInit {
       termsAndConditions: new FormControl(false, {
         validators: [Validators.requiredTrue],
       }),
+    }, {
+      updateOn: 'blur', // set updated behavior for the whole form
     });
 
     this.getForecastData();
+
+    // to catch any changes in any form
+    this.forecastForm.valueChanges.subscribe((data) => console.log(data));
   }
 
   getForecastData() {
@@ -59,11 +70,11 @@ export class ForecastComponent implements OnInit {
       forecastedSum: 100,
       targetDate: '',
       nestedForm: {
-        nestedField: ''
+        nestedField: '',
       },
       tasks: [],
       termsAndConditions: false,
-    })
+    });
   }
 
   addForecast() {
@@ -80,9 +91,12 @@ export class ForecastComponent implements OnInit {
 
   private newTask(): any {
     return this.formBuilder.group({
-      definition: ['', {
-        validators: [Validators.required]
-      }],
+      definition: [
+        '',
+        {
+          validators: [Validators.required],
+        },
+      ],
       priority: [''],
     });
   }
