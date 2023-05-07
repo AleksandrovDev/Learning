@@ -23,6 +23,7 @@
     Delete current sum
   </button>
 </div>
+{{ forecastForm.invalid }}
 <form
   class="example-form"
   [formGroup]="forecastForm"
@@ -60,6 +61,9 @@
     />
     <mat-error *ngIf="forecastForm.get('forecastedSum')?.hasError('min')">
       Please enter a number greater than 1
+    </mat-error>
+    <mat-error *ngIf="forecastForm.get('forecastedSum')?.hasError('invalidForecastedSum')">
+      Forecasted sum should be greater than current sum.
     </mat-error>
     <!-- <mat-error *ngIf="forecastForm.hasError('required')">
       Email is <strong>required</strong>
