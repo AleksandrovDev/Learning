@@ -36,6 +36,11 @@ const routes: Routes = [
       import('./forecast/forecast.module').then((m) => m.ForecastModule),
   },
   {
+    path: 'comments',
+    loadChildren: () =>
+      import('./comment/comment.module').then((m) => m.CommentModule),
+  },
+  {
     path: '**',
     component: NotFoundComponent,
   },
