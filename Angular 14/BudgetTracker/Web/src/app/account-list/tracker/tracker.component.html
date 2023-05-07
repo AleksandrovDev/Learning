@@ -12,10 +12,23 @@
   Toggle
 </button>
 {{ accounts$ ? "" : "No accounts" }}
+
+{{ accountSumFilter | json }}
+
+<div>
+  <input
+    type="number"
+    class="form-control"
+    placeholder="Sum"
+    [formControl]="accountSumFilter"
+  />
+</div>
+
 <div *ngIf="accounts$ | async as accounts">
   <budget-account-list
     *ngIf="hideIncome"
     [accounts]="accounts"
+    [currentSum]="accountSumFilter.value"
     [title]="title"
     (updatedAccount)="showUpdateMessage($event)"
   ></budget-account-list>

@@ -1,6 +1,6 @@
 <div *ngIf="accounts?.length">
   <h2>{{ title }}</h2>
-  <div *ngFor="let account of accounts">
+  <div *ngFor="let account of accounts | filter : currentSum!">
     <budget-account
       [account]="account"
       (updatedAccount)="showUpdateMessage($event)"

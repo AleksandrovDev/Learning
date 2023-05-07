@@ -19,6 +19,7 @@ import { Account } from './account/account';
 export class AccountListComponent implements OnChanges, OnDestroy {
   @Input() accounts: Account[] | null = [];
   @Input() title: string = '';
+  @Input() currentSum!: number | null;
   @Output() updatedAccount = new EventEmitter<Account>();
 
   showUpdateMessage(account: Account) {

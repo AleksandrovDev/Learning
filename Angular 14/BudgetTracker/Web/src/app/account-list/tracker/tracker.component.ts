@@ -16,9 +16,18 @@ import { HeaderComponent } from '../../header/header.component';
 import { TrackerService } from './services/tracker.service';
 import { APP_SERVICE_CONFIG } from '../../app-config/app-config.service';
 import { AppConfig } from '../../app-config/app-config.interface';
-import { Observable, Subject, Subscription, catchError, map, of, tap } from 'rxjs';
+import {
+  Observable,
+  Subject,
+  Subscription,
+  catchError,
+  map,
+  of,
+  tap,
+} from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 import { ConfigService } from 'src/app/services/config.service';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'budget-tracker',
@@ -56,14 +65,17 @@ export class TrackerComponent
     })
   );
 
+  accountSumFilter = new FormControl<number>({
+    value: 0,
+    disabled: false,
+  });
+
   // currentBudget$ = this.trackerService.getAccounts$.pipe(
   //   map((accounts) => {
   //     this.trackerService.recalculateTotalSum(accounts);
   //     return this.trackerService.getCurrentBudget();
   //   })
   // )
-
-  
 
   stream = new Observable<string>((observer) => {
     observer.next('User 1');
@@ -97,8 +109,8 @@ export class TrackerComponent
   constructor(
     @SkipSelf() private readonly trackerService: TrackerService,
     @Inject(APP_SERVICE_CONFIG) private config: AppConfig, // Inject value
-    private readonly configService: ConfigService,
-    ) {} // use only for inject services, other logic place in ngOnInit
+    private readonly configService: ConfigService
+  ) {} // use only for inject services, other logic place in ngOnInit
 
   async ngOnInit(): Promise<void> {
     // use to fetch data from the API
@@ -173,11 +185,11 @@ export class TrackerComponent
 
   // addAccount() {
   //   this.trackerService.addAccount().subscribe(async (account) => {
-      // this.trackerService.recalculateTotalSum(this.accounts$)
-      // this.currentBudget$.next('100000')
-      // this.accounts$.next()
-      // this.accounts = [...this.accounts, account];
-      // this.trackerService.recalculateTotalSum(this.accounts);
+  // this.trackerService.recalculateTotalSum(this.accounts$)
+  // this.currentBudget$.next('100000')
+  // this.accounts$.next()
+  // this.accounts = [...this.accounts, account];
+  // this.trackerService.recalculateTotalSum(this.accounts);
   //     this.currentBudget = await this.trackerService.getCurrentBudget();
   //   });
   // }
