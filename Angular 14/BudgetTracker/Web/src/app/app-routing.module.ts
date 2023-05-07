@@ -30,7 +30,7 @@ const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'forecast',
+    path: 'forecast/:accountId',
     // canActivate: [LoginGuard],
     loadChildren: () =>
       import('./forecast/forecast.module').then((m) => m.ForecastModule),

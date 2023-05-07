@@ -9,6 +9,7 @@ import {
 import { ForecastService } from '../forecast.service';
 import { exhaustMap, mergeMap, switchMap } from 'rxjs';
 import { CustomValidator } from './validators/custom-validator';
+import { ActivatedRoute } from '@angular/router';
 
 export class Forecast {
   accountId!: string;
@@ -29,12 +30,16 @@ export class ForecastComponent implements OnInit {
 
   constructor(
     private readonly formBuilder: FormBuilder,
-    private readonly forecastService: ForecastService
+    private readonly forecastService: ForecastService,
+    private readonly route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    const accountId = this.route.snapshot.paramMap.get('accountId');
+
     this.forecastForm = this.formBuilder.group(
       {
+        accountId: new FormControl(accountId),
         forecastId: new FormControl(
           {
             value: '2',
@@ -52,7 +57,11 @@ export class ForecastComponent implements OnInit {
           '',
           {
             updateOn: 'change', // to customize when the valueChanges will be triggered
-            validators: [Validators.min(1), Validators.required, CustomValidator.ValidateSum],
+            validators: [
+              Validators.min(1),
+              Validators.required,
+              CustomValidator.ValidateSum,
+            ],
           },
         ],
         targetDate: ['', [Validators.required]],

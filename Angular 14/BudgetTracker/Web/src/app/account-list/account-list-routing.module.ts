@@ -16,11 +16,10 @@ const routes: Routes = [
         path: 'add',
         component: AccountAddComponent,
       },
-      {
-        path: ':id',
-        component: AccountInfoComponent,
-      },
-      
+      // {
+      //   path: ':id',
+      //   component: AccountInfoComponent,
+      // },
     ],
   },
 ];

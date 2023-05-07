@@ -33,11 +33,24 @@
     *ngIf="forecastForm.get('currentSum')"
     class="example-full-width"
   >
+  <mat-label>Current Sum</mat-label>
     <input
       type="number"
       matInput
       formControlName="currentSum"
       placeholder="Current Sum"
+    />
+  </mat-form-field>
+  <mat-form-field
+    *ngIf="forecastForm.get('accountId')"
+    class="example-full-width"
+  >
+  <mat-label>Account Id</mat-label>
+    <input
+      type="number"
+      matInput
+      formControlName="accountId"
+      placeholder="Account Id"
     />
   </mat-form-field>
   <mat-form-field class="example-full-width">

@@ -28,6 +28,7 @@ import { EmailValidatorDirective } from './email-validator/email-validator.direc
 // import { AccountListModule } from './account-list/account-list.module';
 import { HeaderModule } from './header/header.module';
 import { RouteConfigToken } from './services/routeConfig.service';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 function initFactory(initService: InitService) {
   return () => initService.init();
@@ -61,6 +62,7 @@ function initFactory(initService: InitService) {
     MatListModule,
     FormsModule,
     AppRoutingModule,
+    MatSnackBarModule,
   ],
   providers: [
     {
@@ -80,8 +82,8 @@ function initFactory(initService: InitService) {
     },
     {
       provide: RouteConfigToken,
-      useValue: { title: 'Home'}
-    }
+      useValue: { title: 'Home' },
+    },
   ],
   bootstrap: [AppComponent],
 })
