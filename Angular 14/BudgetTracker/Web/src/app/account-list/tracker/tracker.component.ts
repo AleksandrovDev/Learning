@@ -1,6 +1,8 @@
 import {
+  AfterContentChecked,
   AfterViewChecked,
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   DoCheck,
   Inject,
@@ -35,7 +37,13 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./tracker.component.less'],
 })
 export class TrackerComponent
-  implements OnInit, DoCheck, AfterViewInit, AfterViewChecked, OnDestroy
+  implements
+    OnInit,
+    DoCheck,
+    AfterViewInit,
+    // AfterContentChecked,
+    AfterViewChecked,
+    OnDestroy
 {
   income = '20$';
   role = 'Admin';
@@ -109,7 +117,8 @@ export class TrackerComponent
   constructor(
     @SkipSelf() private readonly trackerService: TrackerService,
     @Inject(APP_SERVICE_CONFIG) private config: AppConfig, // Inject value
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
+    private readonly changeDetector: ChangeDetectorRef,
   ) {} // use only for inject services, other logic place in ngOnInit
 
   async ngOnInit(): Promise<void> {
@@ -167,8 +176,10 @@ export class TrackerComponent
   }
 
   // called when one full cycle completed
-  ngAfterViewChecked(): void {}
-
+  ngAfterViewChecked(): void {
+    this.changeDetector.detectChanges();
+  }
+  
   // Don't use ngDoCheck and onChanges in the same component
 
   ngOnDestroy(): void {
