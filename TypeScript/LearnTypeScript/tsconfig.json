@@ -3,6 +3,7 @@
     "experimentalDecorators": true,
     "module": "CommonJS",
     "lib": ["ES2021", "DOM"],
+    "strict": true
     // "emitDecoratorMetadata": true,
     // "target": "ES5",
     // "esModuleInterop": true,

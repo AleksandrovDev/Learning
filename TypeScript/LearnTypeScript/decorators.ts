@@ -36,7 +36,7 @@ function sealed(constructor: Function) {
 class withConstructorDecorator {
   name = 'Sealed';
 
-  constructor(public price) {}
+  constructor(public targetPrice: number) {}
 }
 
 const sealedObject = new withConstructorDecorator(10);
@@ -45,7 +45,7 @@ const sealedObject = new withConstructorDecorator(10);
   // value: 'asdasd',
   // writable: false,
 // });
-sealedObject['targetPrice'] = '123123';
+sealedObject['targetPrice'] = 123123;
 console.log(sealedObject['targetPrice']);
 
 // Method decorator
@@ -54,7 +54,7 @@ function enumerable(value: boolean) {
   return function (target: any, key: string, descriptor?: PropertyDescriptor) {
     console.log(target, key, descriptor);
     // Object.seal(target);
-    descriptor.enumerable = value;
+    descriptor!.enumerable = value;
     console.log(descriptor);
   };
 }
